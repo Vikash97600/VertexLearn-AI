@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - VertexLearn AI</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Custom Style Sheet Foundation -->
+    <link rel="stylesheet" href="./assets/css/base/variables.css">
+    <link rel="stylesheet" href="./assets/css/base/typography.css">
+    <link rel="stylesheet" href="./assets/css/components/buttons.css">
+    <link rel="stylesheet" href="./assets/css/components/cards.css">
+    <link rel="stylesheet" href="./assets/css/components/forms.css">
+    <link rel="stylesheet" href="./assets/css/components/tables.css">
+    <link rel="stylesheet" href="./assets/css/components/animations.css">
+    <link rel="stylesheet" href="./assets/css/components/utilities.css">
+    <link rel="stylesheet" href="./assets/css/layout/layout.css">
+    <link rel="stylesheet" href="./assets/css/layout/sidebar.css">
+    <link rel="stylesheet" href="./assets/css/layout/header.css">
+    <link rel="stylesheet" href="./assets/css/layout/footer.css">
+    <link rel="stylesheet" href="./assets/css/themes/dark-theme.css">
+    <link rel="stylesheet" href="./assets/css/utilities/responsive.css">
+
+    <!-- Route Guarding & Theme Bootstrapping (Sync instantly) -->
+    <script type="module">
+        import { Router } from './assets/js/config/router.js';
+        Router.guardRoute();
+    </script>
+    <script>
+        (function() {
+            const theme = localStorage.getItem('vertexlearn_theme');
+            if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark-theme');
+            }
+        })();
+    </script>
+</head>
+<body class="bg-primary">
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="appSidebar">
+            <div class="sidebar-brand">
+                <span class="sidebar-brand-text">VertexLearn<span class="text-primary">.AI</span></span>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="student.html" class="sidebar-link active">
+                    <i class="bi bi-grid-1x2"></i>
+                    <span class="sidebar-link-text">My Dashboard</span>
+                </a>
+                <a href="player.html" class="sidebar-link">
+                    <i class="bi bi-play-circle"></i>
+                    <span class="sidebar-link-text">Course Player</span>
+                </a>
+                
+                <span class="sidebar-section-header">Discover</span>
+                <a href="#" class="sidebar-link">
+                    <i class="bi bi-compass"></i>
+                    <span class="sidebar-link-text">Course Catalog</span>
+                </a>
+                <a href="#" class="sidebar-link">
+                    <i class="bi bi-chat-left-text"></i>
+                    <span class="sidebar-link-text">Discussions</span>
+                </a>
+
+                <span class="sidebar-section-header">Account</span>
+                <a href="#" class="sidebar-link">
+                    <i class="bi bi-award"></i>
+                    <span class="sidebar-link-text">Certificates</span>
+                </a>
+                <a href="#" class="sidebar-link">
+                    <i class="bi bi-gear"></i>
+                    <span class="sidebar-link-text">Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <!-- Theme Toggle Button -->
+                <button class="btn btn-secondary-custom w-100 theme-toggle-btn justify-content-center" id="themeToggleBtn">
+                    <i class="bi bi-moon"></i>
+                    <span class="sidebar-link-text ms-1">Toggle Theme</span>
+                </button>
+                
+                <a href="#" class="sidebar-profile" id="profileTrigger2">
+                    <div class="avatar bg-secondary border d-flex align-items-center justify-content-center">
+                        <i class="bi bi-person text-secondary"></i>
+                    </div>
+                    <div class="sidebar-profile-info">
+                        <div class="fw-semibold text-small" id="sidebarProfileName">Ananya Sharma</div>
+                        <div class="text-xs text-secondary-custom">Student</div>
+                    </div>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Workspace content -->
+        <div class="main-content" id="mainContent">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="sidebar-toggler" id="sidebarToggler" aria-label="Toggle Sidebar">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <!-- Mobile Side Menu Open button -->
+                    <button class="sidebar-toggler mobile-only" id="mobileSidebarToggler" aria-label="Open Navigation">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    
+                    <div class="search-wrapper desktop-only">
+                        <i class="bi bi-search"></i>
+                        <input type="text" id="globalSearchInput" class="form-control" placeholder="Search courses, notes..." style="width: 280px;">
+                        <span class="search-kbd">Ctrl+K</span>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <!-- Streak badge helper -->
+                    <div class="streak-badge">
+                        <i class="bi bi-fire"></i>
+                        <span id="streakCount">5 Days</span>
+                    </div>
+
+                    <!-- Notification Indicator -->
+                    <div class="notification-bell-container" id="notificationTrigger">
+                        <button class="btn btn-ghost btn-icon" aria-label="Notifications">
+                            <i class="bi bi-bell"></i>
+                            <span class="notification-badge"></span>
+                        </button>
+                        <!-- Notifications Dropdown List container -->
+                        <div class="dropdown-menu dropdown-menu-end profile-dropdown-menu" id="notificationDropdown" style="width: 320px;">
+                            <div class="profile-dropdown-header d-flex justify-content-between align-items-center">
+                                <h6 class="fw-bold mb-0">Notifications</h6>
+                                <a href="#" class="text-xs text-primary" id="markAllReadBtn">Mark all read</a>
+                            </div>
+                            <div id="notificationsList" style="max-height: 285px; overflow-y: auto;">
+                                <!-- Rendered dynamically by navbar.js -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Dropdown -->
+                    <div class="position-relative">
+                        <div class="avatar bg-secondary border d-flex align-items-center justify-content-center cursor-pointer" id="profileTrigger">
+                            <i class="bi bi-person text-secondary"></i>
+                        </div>
+                        <div class="dropdown-menu dropdown-menu-end profile-dropdown-menu" id="profileDropdown">
+                            <div class="profile-dropdown-header">
+                                <div class="profile-dropdown-name" id="dropdownProfileName">Ananya Sharma</div>
+                                <div class="profile-dropdown-email" id="dropdownProfileEmail">ananya@example.com</div>
+                            </div>
+                            <a href="#" class="profile-dropdown-item"><i class="bi bi-person"></i> My Profile</a>
+                            <a href="#" class="profile-dropdown-item"><i class="bi bi-award"></i> Certificates</a>
+                            <hr class="dropdown-divider">
+                            <button id="logoutBtn" class="profile-dropdown-item danger bg-transparent border-0 w-100"><i class="bi bi-box-arrow-right"></i> Sign Out</button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content Shell -->
+            <main class="content-area">
+                <div class="d-flex justify-content-between align-items-center mb-5">
+                    <div>
+                        <h1 class="h3 mb-1">My Dashboard</h1>
+                        <p class="text-small mb-0">Track your courses, AI interactions, and learning streaks.</p>
+                    </div>
+                </div>
+
+                <!-- Metrics Grid -->
+                <div class="row g-4 mb-5">
+                    <div class="col-md-3">
+                        <div class="card stat-card">
+                            <span class="stat-card-label">Enrolled Courses</span>
+                            <span class="stat-card-value">4</span>
+                            <span class="stat-card-change positive"><i class="bi bi-arrow-up-right"></i> Active Progress</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stat-card">
+                            <span class="stat-card-label">Completed Lectures</span>
+                            <span class="stat-card-value">24</span>
+                            <span class="stat-card-change positive">+8 watched this week</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stat-card">
+                            <span class="stat-card-label">AI Tutor Questions</span>
+                            <span class="stat-card-value">127</span>
+                            <span class="stat-card-change positive">98% satisfaction rate</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stat-card">
+                            <span class="stat-card-label">Study Plan Mastery</span>
+                            <span class="stat-card-value">72%</span>
+                            <span class="stat-card-change positive">+4% improvement</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course Progress list Shell -->
+                <div class="row g-4">
+                    <div class="col-lg-8">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h5 class="mb-0">Active Courses</h5>
+                                <a href="#" class="text-xs text-primary">View Catalog</a>
+                            </div>
+                            <div class="card-body">
+                                <div id="activeCoursesList" class="d-flex flex-column gap-4">
+                                    <!-- Course 1 -->
+                                    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center border-bottom pb-4">
+                                        <div class="mb-3 mb-sm-0">
+                                            <h6 class="fw-semibold mb-1">Data Structures & Algorithms (Advanced)</h6>
+                                            <p class="text-xs text-secondary-custom mb-2">Module 3: Non-Linear Structures (Trees & Graphs)</p>
+                                            <div class="progress" style="height: 6px; width: 250px; background-color: var(--border-color);">
+                                                <div class="progress-bar bg-primary" role="progressbar" style="width: 68%" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <span class="text-xs text-secondary-custom">68% Complete</span>
+                                            <a href="player.html" class="btn btn-secondary-custom btn-sm">Resume Lecture</a>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Course 2 -->
+                                    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center pb-2">
+                                        <div class="mb-3 mb-sm-0">
+                                            <h6 class="fw-semibold mb-1">Introduction to Machine Learning</h6>
+                                            <p class="text-xs text-secondary-custom mb-2">Module 1: Regression Analysis</p>
+                                            <div class="progress" style="height: 6px; width: 250px; background-color: var(--border-color);">
+                                                <div class="progress-bar bg-primary" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <span class="text-xs text-secondary-custom">20% Complete</span>
+                                            <a href="player.html" class="btn btn-secondary-custom btn-sm">Resume Lecture</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI recommendations widget empty state placeholder -->
+                    <div class="col-lg-4">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h5 class="mb-0">AI Tutor Recommendations</h5>
+                            </div>
+                            <div class="card-body d-flex flex-column align-items-center justify-content-center text-center py-5">
+                                <div class="avatar-lg bg-warning-light d-flex align-items-center justify-content-center rounded-3 mb-4 text-warning">
+                                    <i class="bi bi-magic fs-3"></i>
+                                </div>
+                                <h6 class="fw-semibold mb-2">Generating Recommendations...</h6>
+                                <p class="text-xs text-secondary-custom max-width-readable mb-0">
+                                    Our AI RAG service is processing your lecture bookmarks and quiz score history.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Footer -->
+            <footer class="dashboard-footer">
+                <div>&copy; 2026 VertexLearn AI. All rights reserved.</div>
+                <div class="dashboard-footer-links">
+                    <a href="#">Help Center</a>
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Interactive Workspace logic bootstrapper -->
+    <script type="module">
+        import { ThemeManager } from './assets/js/components/theme.js';
+        import { Sidebar } from './assets/js/components/sidebar.js';
+        import { Navbar } from './assets/js/components/navbar.js';
+        import { Toast } from './assets/js/components/toast.js';
+        import { Storage } from './assets/js/config/storage.js';
+        import { STORAGE_KEYS, ROUTES } from './assets/js/config/constants.js';
+
+        // Load visual layout controls
+        ThemeManager.init();
+        Sidebar.init();
+        Navbar.init();
+
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', () => ThemeManager.toggle());
+        }
+
+        // Set Profile details dynamically from LocalStorage
+        const user = Storage.get(STORAGE_KEYS.USER_INFO);
+        if (user) {
+            document.getElementById('sidebarProfileName').textContent = user.full_name;
+            document.getElementById('dropdownProfileName').textContent = user.full_name;
+            document.getElementById('dropdownProfileEmail').textContent = user.email;
+        }
+
+        // Handle notifications render mock data
+        const mockNotifs = [
+            { id: 1, title: 'Quiz Available', body: 'The AI Tutor generated a custom quiz based on your Tree structures bookmarks.', is_read: false },
+            { id: 2, title: 'Assignment Graded', body: 'Instructor Rohit graded your Linked List assignment. Check feedback.', is_read: true }
+        ];
+        
+        Navbar.renderNotifications(mockNotifs, document.getElementById('notificationsList'));
+
+        // Handle mark all read
+        document.getElementById('markAllReadBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            mockNotifs.forEach(n => n.is_read = true);
+            Navbar.renderNotifications(mockNotifs, document.getElementById('notificationsList'));
+            Toast.success('All notifications marked as read.');
+        });
+
+        // Handle Logout
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            Storage.remove(STORAGE_KEYS.ACCESS_TOKEN);
+            Storage.remove(STORAGE_KEYS.REFRESH_TOKEN);
+            Storage.remove(STORAGE_KEYS.USER_INFO);
+            Toast.info('Signed out successfully.');
+            setTimeout(() => {
+                window.location.href = ROUTES.LOGIN;
+            }, 800);
+        });
+    </script>
+</body>
+</html>

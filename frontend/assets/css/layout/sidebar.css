@@ -1,0 +1,164 @@
+/* sidebar.css - Navigation Sidebar and Interactions */
+
+.sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--bg-sidebar);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    transition: width var(--transition-base), transform var(--transition-base);
+}
+
+/* Sidebar Logo / Top section */
+.sidebar-brand {
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    padding: 0 var(--space-5);
+    border-bottom: 1px solid var(--border-color);
+    gap: var(--space-3);
+    font-weight: 700;
+    font-size: 1.125rem; /* 18px */
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+}
+
+.sidebar-brand img {
+    height: 28px;
+}
+
+/* Sidebar Scrollable Nav List */
+.sidebar-nav {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: var(--space-4) var(--space-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+/* Sidebar Nav Links */
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 0.5rem 0.75rem;
+    color: var(--text-secondary);
+    font-size: 0.875rem; /* 14px */
+    font-weight: 500;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+    text-decoration: none;
+}
+
+.sidebar-link i {
+    font-size: 1.125rem; /* 18px icon */
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+}
+
+.sidebar-link:hover {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+.sidebar-link:hover i {
+    color: var(--brand-primary);
+}
+
+/* Active Sidebar Link */
+.sidebar-link.active {
+    background-color: var(--brand-primary-light);
+    color: var(--brand-primary);
+    font-weight: 600;
+}
+
+.sidebar-link.active i {
+    color: var(--brand-primary);
+}
+
+/* Collapsed Sidebar overrides */
+.sidebar.collapsed {
+    width: var(--sidebar-collapsed-width);
+}
+
+.sidebar.collapsed .sidebar-brand-text,
+.sidebar.collapsed .sidebar-link-text,
+.sidebar.collapsed .sidebar-section-header {
+    display: none;
+}
+
+.sidebar.collapsed .sidebar-brand {
+    justify-content: center;
+    padding: 0;
+}
+
+.sidebar.collapsed .sidebar-link {
+    justify-content: center;
+    padding: 0.625rem 0;
+}
+
+/* Sidebar Footer Profile Area */
+.sidebar-footer {
+    padding: var(--space-4) var(--space-3);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    background-color: var(--bg-sidebar);
+}
+
+.sidebar-profile {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 0.5rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+    text-decoration: none;
+    color: var(--text-primary);
+}
+
+.sidebar-profile:hover {
+    background-color: var(--bg-secondary);
+}
+
+.sidebar.collapsed .sidebar-profile-info {
+    display: none;
+}
+
+/* Sidebar Section Headers (for groups like Course Admin, Settings) */
+.sidebar-section-header {
+    font-size: 0.6875rem; /* 11px */
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    letter-spacing: 0.05em;
+    padding: var(--space-3) var(--space-4) var(--space-2);
+}
+
+/* Offcanvas Sidebar for Mobile */
+@media (max-width: 991.98px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    
+    .sidebar.mobile-open {
+        transform: translateX(0);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .main-content {
+        margin-left: 0 !important;
+    }
+}

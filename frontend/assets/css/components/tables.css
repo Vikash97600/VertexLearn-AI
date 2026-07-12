@@ -1,0 +1,107 @@
+/* tables.css - Clean, Modern Data Tables */
+
+.table-responsive {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    background-color: var(--bg-card);
+    overflow: hidden;
+}
+
+.table {
+    margin-bottom: 0;
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--bg-card);
+}
+
+.table th {
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.75rem; /* 12px for tabular headers */
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.table td {
+    padding: var(--space-4);
+    vertical-align: middle;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.875rem; /* 14px */
+    color: var(--text-primary);
+}
+
+.table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Hover effect on rows */
+.table-hover tbody tr {
+    transition: background-color var(--transition-fast);
+}
+
+.table-hover tbody tr:hover {
+    background-color: var(--bg-secondary);
+}
+
+/* Custom Table Badges */
+.badge-custom {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem; /* 12px */
+    font-weight: 500;
+    border-radius: var(--radius-full);
+    line-height: 1;
+}
+
+.badge-success-custom {
+    background-color: var(--brand-success-light);
+    color: var(--brand-success);
+    border: 1px solid rgba(22, 163, 74, 0.15);
+}
+
+.badge-warning-custom {
+    background-color: var(--brand-warning-light);
+    color: var(--brand-warning);
+    border: 1px solid rgba(245, 158, 11, 0.15);
+}
+
+.badge-danger-custom {
+    background-color: var(--brand-danger-light);
+    color: var(--brand-danger);
+    border: 1px solid rgba(220, 38, 38, 0.15);
+}
+
+.badge-info-custom {
+    background-color: var(--brand-primary-light);
+    color: var(--brand-primary);
+    border: 1px solid rgba(37, 99, 235, 0.15);
+}
+
+/* Skeleton Loading Table Row */
+.skeleton-row td {
+    pointer-events: none;
+}
+
+.skeleton-text {
+    height: 16px;
+    background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--border-color) 50%, var(--bg-secondary) 75%);
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s infinite;
+    border-radius: 4px;
+}
+
+@keyframes skeleton-shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - VertexLearn AI</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Custom Style Sheet Foundation -->
+    <link rel="stylesheet" href="./assets/css/base/variables.css">
+    <link rel="stylesheet" href="./assets/css/base/typography.css">
+    <link rel="stylesheet" href="./assets/css/components/buttons.css">
+    <link rel="stylesheet" href="./assets/css/components/cards.css">
+    <link rel="stylesheet" href="./assets/css/components/forms.css">
+    <link rel="stylesheet" href="./assets/css/components/animations.css">
+    <link rel="stylesheet" href="./assets/css/components/utilities.css">
+    <link rel="stylesheet" href="./assets/css/layout/layout.css">
+    <link rel="stylesheet" href="./assets/css/themes/dark-theme.css">
+    <link rel="stylesheet" href="./assets/css/utilities/responsive.css">
+
+    <script>
+        (function() {
+            const theme = localStorage.getItem('vertexlearn_theme');
+            if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark-theme');
+            }
+        })();
+    </script>
+</head>
+<body class="bg-primary">
+
+    <div class="auth-layout">
+        <!-- Banner Side Panel (Sticky on large screens) -->
+        <div class="auth-banner-panel desktop-only">
+            <div>
+                <a href="index.html" class="sidebar-brand text-decoration-none p-0">
+                    <span class="fs-4 fw-bold" style="letter-spacing: -0.03em;">VertexLearn<span class="text-primary">.AI</span></span>
+                </a>
+            </div>
+            
+            <div class="my-auto">
+                <blockquote class="fs-4 fw-medium text-primary mb-4" style="line-height: 1.4; letter-spacing: -0.02em;">
+                    "We upload pre-recorded content, chunk it, and the FastAPI RAG service automatically parses chunks into pgvector, saving hours of manual setup."
+                </blockquote>
+                <div class="d-flex align-items-center gap-3">
+                    <div class="avatar avatar-lg bg-secondary border">
+                        <i class="bi bi-person fs-3 d-flex align-items-center justify-content-center h-100 text-secondary"></i>
+                    </div>
+                    <div>
+                        <div class="fw-semibold text-primary text-small">Rohit Sen</div>
+                        <div class="text-xs text-secondary-custom">Data Structures Instructor</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-xs text-muted-custom">
+                &copy; 2026 Vertexon Learning Technologies Pvt. Ltd.
+            </div>
+        </div>
+
+        <!-- Form Side Panel -->
+        <div class="auth-form-panel">
+            <div class="auth-form-container">
+                <!-- Mobile Navigation Branding -->
+                <div class="mobile-only text-center mb-4">
+                    <a href="index.html" class="sidebar-brand text-decoration-none d-inline-flex">
+                        <span class="fs-4 fw-bold" style="letter-spacing: -0.03em;">VertexLearn<span class="text-primary">.AI</span></span>
+                    </a>
+                </div>
+
+                <div class="mb-4">
+                    <h2 class="h3 fw-bold mb-2">Create Account</h2>
+                    <p class="text-small">Get started with VertexLearn AI as a learner today.</p>
+                </div>
+
+                <form id="registerForm" novalidate>
+                    <!-- Full Name field -->
+                    <div class="mb-3">
+                        <label for="nameInput" class="form-label">Full Name</label>
+                        <input type="text" id="nameInput" class="form-control" placeholder="Ananya Sharma" required>
+                        <div class="invalid-feedback" id="nameError">Full name is required.</div>
+                    </div>
+
+                    <!-- Email field -->
+                    <div class="mb-3">
+                        <label for="emailInput" class="form-label">Email Address</label>
+                        <input type="email" id="emailInput" class="form-control" placeholder="name@example.com" required>
+                        <div class="invalid-feedback" id="emailError">Please enter a valid email address.</div>
+                    </div>
+
+                    <!-- Phone field -->
+                    <div class="mb-3">
+                        <label for="phoneInput" class="form-label">Phone Number (Optional)</label>
+                        <input type="tel" id="phoneInput" class="form-control" placeholder="+91 98765 43210">
+                        <div class="invalid-feedback" id="phoneError">Please enter a valid phone number.</div>
+                    </div>
+
+                    <!-- Password field -->
+                    <div class="mb-3">
+                        <label for="passwordInput" class="form-label">Password</label>
+                        <input type="password" id="passwordInput" class="form-control" placeholder="••••••••" required>
+                        <div class="form-text text-xs">At least 8 characters with upper, lower, numbers, and symbols.</div>
+                        <div class="invalid-feedback" id="passwordError">Password must meet requirements.</div>
+                    </div>
+
+                    <!-- Confirm Password field -->
+                    <div class="mb-4">
+                        <label for="confirmPasswordInput" class="form-label">Confirm Password</label>
+                        <input type="password" id="confirmPasswordInput" class="form-control" placeholder="••••••••" required>
+                        <div class="invalid-feedback" id="confirmPasswordError">Passwords do not match.</div>
+                    </div>
+
+                    <!-- Register Submit -->
+                    <button type="submit" id="submitBtn" class="btn btn-primary btn-lg w-100 mb-4">
+                        Create Account
+                    </button>
+
+                    <p class="text-center text-small">
+                        Already have an account? <a href="login.html" class="fw-semibold">Sign In</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { ThemeManager } from './assets/js/components/theme.js';
+        import { Validator } from './assets/js/utils/validator.js';
+        import { Toast } from './assets/js/components/toast.js';
+        import { Loader } from './assets/js/components/loader.js';
+        import { Storage } from './assets/js/config/storage.js';
+        import { STORAGE_KEYS, ROUTES } from './assets/js/config/constants.js';
+
+        // Load Theme System
+        ThemeManager.init();
+
+        const form = document.getElementById('registerForm');
+        const nameInput = document.getElementById('nameInput');
+        const emailInput = document.getElementById('emailInput');
+        const phoneInput = document.getElementById('phoneInput');
+        const passwordInput = document.getElementById('passwordInput');
+        const confirmPasswordInput = document.getElementById('confirmPasswordInput');
+        const submitBtn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Clear invalid states
+            [nameInput, emailInput, phoneInput, passwordInput, confirmPasswordInput].forEach(inp => {
+                inp.classList.remove('is-invalid');
+            });
+
+            // Perform client-side validation
+            const nameValidation = Validator.validateRequired(nameInput.value, 'Full name');
+            const emailValidation = Validator.validateEmail(emailInput.value);
+            const phoneValidation = Validator.validatePhone(phoneInput.value);
+            const passwordValidation = Validator.validatePassword(passwordInput.value);
+            
+            let hasErrors = false;
+
+            if (!nameValidation.isValid) {
+                nameInput.classList.add('is-invalid');
+                document.getElementById('nameError').textContent = nameValidation.errorMsg;
+                hasErrors = true;
+            }
+
+            if (!emailValidation.isValid) {
+                emailInput.classList.add('is-invalid');
+                document.getElementById('emailError').textContent = emailValidation.errorMsg;
+                hasErrors = true;
+            }
+
+            if (!phoneValidation.isValid) {
+                phoneInput.classList.add('is-invalid');
+                document.getElementById('phoneError').textContent = phoneValidation.errorMsg;
+                hasErrors = true;
+            }
+
+            if (!passwordValidation.isValid) {
+                passwordInput.classList.add('is-invalid');
+                document.getElementById('passwordError').textContent = passwordValidation.errorMsg;
+                hasErrors = true;
+            } else if (passwordInput.value !== confirmPasswordInput.value) {
+                confirmPasswordInput.classList.add('is-invalid');
+                document.getElementById('confirmPasswordError').textContent = 'Passwords do not match.';
+                hasErrors = true;
+            }
+
+            if (hasErrors) {
+                Toast.error('Please resolve validation errors before registering.');
+                return;
+            }
+
+            // Simulate loading state
+            Loader.setButtonLoading(submitBtn, true);
+
+            setTimeout(() => {
+                Loader.setButtonLoading(submitBtn, false);
+
+                // Save simulated student JWT token
+                Storage.set(STORAGE_KEYS.ACCESS_TOKEN, 'mock_jwt_access_token_student');
+                Storage.set(STORAGE_KEYS.REFRESH_TOKEN, 'mock_jwt_refresh_token_student');
+                Storage.set(STORAGE_KEYS.USER_INFO, {
+                    id: 'mock-user-uuid',
+                    full_name: nameInput.value,
+                    email: emailInput.value,
+                    role: 'student'
+                });
+
+                Toast.success('Account created successfully! Loading your dashboard...');
+
+                setTimeout(() => {
+                    window.location.href = ROUTES.STUDENT_DASHBOARD;
+                }, 1000);
+
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

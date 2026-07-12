@@ -1,0 +1,95 @@
+/* responsive.css - Device Responsiveness and Typography Scale Down */
+
+/* Desktop & Laptop (lg and up) */
+@media (min-width: 992px) {
+    /* Hide mobile specific elements */
+    .mobile-only {
+        display: none !important;
+    }
+}
+
+/* Tablet (md and down) */
+@media (max-width: 991.98px) {
+    /* Header layout changes */
+    .header {
+        padding: 0 var(--space-4);
+    }
+    
+    /* Content Padding reduction */
+    .content-area {
+        padding: var(--space-4);
+    }
+    
+    /* Typography adjustments for smaller viewports */
+    .text-hero {
+        font-size: 2.75rem; /* ~44px */
+        letter-spacing: -0.03em;
+    }
+    
+    h1, .h1 {
+        font-size: 2rem; /* ~32px */
+    }
+    
+    h2, .h2 {
+        font-size: 1.75rem; /* ~28px */
+    }
+    
+    h3, .h3 {
+        font-size: 1.5rem; /* ~24px */
+    }
+
+    /* Hide desktop-only layout items */
+    .desktop-only {
+        display: none !important;
+    }
+    
+    /* Ensure tables have horizontal scroll visible */
+    .table-responsive {
+        border-radius: var(--radius-md);
+        margin-bottom: var(--space-4);
+    }
+}
+
+/* Mobile (sm and down) */
+@media (max-width: 575.98px) {
+    /* Custom spacing reduction for dense screens */
+    .card-body {
+        padding: var(--space-4);
+    }
+    
+    .btn {
+        width: 100%; /* Make buttons full width on very small screens for better accessibility */
+    }
+    
+    .btn-icon, .btn-secondary-custom.btn-icon, .btn-primary.btn-icon {
+        width: 38px !important; /* Keep icon button sizing square */
+    }
+    
+    /* Footer layout stacked */
+    .dashboard-footer {
+        flex-direction: column;
+        gap: var(--space-3);
+        text-align: center;
+    }
+    
+    .dashboard-footer-links {
+        justify-content: center;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .sidebar, .header, .dashboard-footer, .btn, .no-print {
+        display: none !important;
+    }
+    
+    .main-content {
+        margin-left: 0 !important;
+        padding: 0 !important;
+    }
+    
+    body {
+        background-color: #FFFFFF !important;
+        color: #000000 !important;
+    }
+}

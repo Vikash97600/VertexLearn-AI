@@ -1,0 +1,96 @@
+/* footer.css - Dashboard and Public Footer Layouts */
+
+/* Dashboard Footer */
+.dashboard-footer {
+    padding: var(--space-4) var(--space-6);
+    background-color: var(--bg-primary);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.75rem; /* 12px */
+    color: var(--text-secondary);
+}
+
+.dashboard-footer-links {
+    display: flex;
+    gap: var(--space-4);
+}
+
+.dashboard-footer-links a {
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+}
+
+.dashboard-footer-links a:hover {
+    color: var(--text-primary);
+}
+
+/* Public/Landing Footer */
+.public-footer {
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    padding: var(--space-7) 0 var(--space-5);
+    margin-top: auto;
+}
+
+.public-footer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    margin-bottom: var(--space-6);
+}
+
+@media (min-width: 768px) {
+    .public-footer-grid {
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+    }
+}
+
+.public-footer-section-title {
+    font-size: 0.875rem; /* 14px */
+    font-weight: 600;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-4);
+}
+
+.public-footer-links {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.public-footer-links a {
+    font-size: 0.875rem; /* 14px */
+    color: var(--text-secondary);
+}
+
+.public-footer-links a:hover {
+    color: var(--text-primary);
+}
+
+.public-footer-bottom {
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    align-items: center;
+    justify-content: space-between;
+}
+
+@media (min-width: 768px) {
+    .public-footer-bottom {
+        flex-direction: row;
+    }
+}
+
+.public-footer-copyright {
+    font-size: 0.875rem; /* 14px */
+    color: var(--text-secondary);
+}

@@ -1,0 +1,116 @@
+/* utilities.css - Custom Utility Classes for Layout and Styling */
+
+/* Glassmorphism / Blur */
+.glass-panel {
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* Custom Scrollbars (Minimalist) */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+/* Custom Focus Ring Indicator (For non-input focusable elements) */
+.focus-ring-custom:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring-shadow);
+}
+
+/* Spacing and Borders (Neutral Stripe style) */
+.border-dashed {
+    border-style: dashed !important;
+}
+
+.border-2 {
+    border-width: 2px !important;
+}
+
+/* Avatar styling */
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    background-color: var(--bg-secondary);
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.avatar-lg {
+    width: 48px;
+    height: 48px;
+}
+
+.avatar-sm {
+    width: 24px;
+    height: 24px;
+}
+
+/* Status Indicators */
+.status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+    display: inline-block;
+}
+
+.status-online { background-color: var(--brand-success); }
+.status-offline { background-color: var(--text-muted); }
+.status-away { background-color: var(--brand-warning); }
+
+/* Max-width constraints for clean Notion-like readable pages */
+.max-width-readable {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Hover background change utility */
+.hover-bg {
+    transition: background-color var(--transition-fast);
+}
+.hover-bg:hover {
+    background-color: var(--bg-secondary);
+}
+
+/* Streak Counter Badge Graphic style */
+.streak-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background-color: var(--brand-warning-light);
+    color: var(--brand-warning);
+    border: 1px solid rgba(245, 158, 11, 0.15);
+    padding: 0.25rem 0.625rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: var(--radius-full);
+}
+.streak-badge i {
+    animation: pulse-fire 2s infinite;
+}
+
+@keyframes pulse-fire {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+    }
+}

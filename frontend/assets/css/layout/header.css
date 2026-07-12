@@ -1,0 +1,125 @@
+/* header.css - Global Application Header Layout */
+
+.header {
+    height: var(--header-height);
+    background-color: var(--bg-primary);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--space-6);
+    position: sticky;
+    top: 0;
+    z-index: 990;
+    box-shadow: var(--shadow-sm);
+}
+
+.header-left, .header-right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+/* Sidebar toggler */
+.sidebar-toggler {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.25rem;
+    padding: var(--space-2);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.sidebar-toggler:hover {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* Notifications Bell Badge */
+.notification-bell-container {
+    position: relative;
+    cursor: pointer;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+    background-color: var(--brand-danger);
+    border: 2px solid var(--bg-primary);
+}
+
+/* User Settings Profile Dropdown Menu */
+.profile-dropdown-menu {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: var(--space-2);
+    width: 240px;
+    animation: slideUp var(--transition-fast) ease-out;
+}
+
+.profile-dropdown-header {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: var(--space-2);
+}
+
+.profile-dropdown-name {
+    font-weight: 600;
+    font-size: 0.875rem; /* 14px */
+    color: var(--text-primary);
+}
+
+.profile-dropdown-email {
+    font-size: 0.75rem; /* 12px */
+    color: var(--text-secondary);
+}
+
+.profile-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 0.5rem var(--space-4);
+    font-size: 0.875rem; /* 14px */
+    color: var(--text-secondary);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+}
+
+.profile-dropdown-item:hover {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+.profile-dropdown-item.danger:hover {
+    background-color: var(--brand-danger-light);
+    color: var(--brand-danger);
+}
+
+/* Public Header (Landing Navbar) */
+.public-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    z-index: 1050;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--space-6);
+}

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - VertexLearn AI</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Custom Style Sheet Foundation -->
+    <link rel="stylesheet" href="./assets/css/base/variables.css">
+    <link rel="stylesheet" href="./assets/css/base/typography.css">
+    <link rel="stylesheet" href="./assets/css/components/buttons.css">
+    <link rel="stylesheet" href="./assets/css/components/cards.css">
+    <link rel="stylesheet" href="./assets/css/components/forms.css">
+    <link rel="stylesheet" href="./assets/css/components/animations.css">
+    <link rel="stylesheet" href="./assets/css/components/utilities.css">
+    <link rel="stylesheet" href="./assets/css/layout/layout.css">
+    <link rel="stylesheet" href="./assets/css/themes/dark-theme.css">
+    <link rel="stylesheet" href="./assets/css/utilities/responsive.css">
+
+    <script>
+        (function() {
+            const theme = localStorage.getItem('vertexlearn_theme');
+            if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark-theme');
+            }
+        })();
+    </script>
+</head>
+<body class="bg-primary">
+
+    <div class="auth-layout">
+        <!-- Banner Side Panel (Sticky on large screens) -->
+        <div class="auth-banner-panel desktop-only">
+            <div>
+                <a href="index.html" class="sidebar-brand text-decoration-none p-0">
+                    <span class="fs-4 fw-bold" style="letter-spacing: -0.03em;">VertexLearn<span class="text-primary">.AI</span></span>
+                </a>
+            </div>
+            
+            <div class="my-auto">
+                <blockquote class="fs-4 fw-medium text-primary mb-4" style="line-height: 1.4; letter-spacing: -0.02em;">
+                    "The RAG AI tutor answers doubt resolutions immediately. It significantly reduced my study bottlenecks during final year exams."
+                </blockquote>
+                <div class="d-flex align-items-center gap-3">
+                    <div class="avatar avatar-lg bg-secondary border">
+                        <i class="bi bi-person fs-3 d-flex align-items-center justify-content-center h-100 text-secondary"></i>
+                    </div>
+                    <div>
+                        <div class="fw-semibold text-primary text-small">Ananya Sharma</div>
+                        <div class="text-xs text-secondary-custom">Final Year B.Tech Student</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-xs text-muted-custom">
+                &copy; 2026 Vertexon Learning Technologies Pvt. Ltd.
+            </div>
+        </div>
+
+        <!-- Form Side Panel -->
+        <div class="auth-form-panel">
+            <div class="auth-form-container">
+                <!-- Mobile Navigation Branding -->
+                <div class="mobile-only text-center mb-5">
+                    <a href="index.html" class="sidebar-brand text-decoration-none d-inline-flex">
+                        <span class="fs-4 fw-bold" style="letter-spacing: -0.03em;">VertexLearn<span class="text-primary">.AI</span></span>
+                    </a>
+                </div>
+
+                <div class="mb-5">
+                    <h2 class="h3 fw-bold mb-2">Welcome Back</h2>
+                    <p class="text-small">Enter your credentials to access your workspace dashboard.</p>
+                </div>
+
+                <form id="loginForm" novalidate>
+                    <!-- Email field -->
+                    <div class="mb-4">
+                        <label for="emailInput" class="form-label">Email Address</label>
+                        <input type="email" id="emailInput" class="form-control" placeholder="name@example.com" required>
+                        <div class="invalid-feedback" id="emailError">Please enter a valid email address.</div>
+                    </div>
+
+                    <!-- Password field -->
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <label for="passwordInput" class="form-label mb-0">Password</label>
+                            <a href="#" class="text-xs text-primary">Forgot Password?</a>
+                        </div>
+                        <input type="password" id="passwordInput" class="form-control" placeholder="••••••••" required>
+                        <div class="invalid-feedback" id="passwordError">Password is required.</div>
+                    </div>
+
+                    <!-- Remember Me / Role selection helper for testing -->
+                    <div class="mb-4 d-flex justify-content-between align-items-center">
+                        <div class="form-check">
+                            <input type="checkbox" id="rememberMeInput" class="form-check-input">
+                            <label for="rememberMeInput" class="form-check-label">Remember Me</label>
+                        </div>
+                    </div>
+
+                    <!-- Sandbox demo shortcut selectors (Makes foundation interaction amazing!) -->
+                    <div class="card p-3 mb-4 bg-secondary">
+                        <label for="demoRoleSelect" class="form-label text-xs fw-semibold text-primary uppercase">Sandbox Demo Login Profile</label>
+                        <select class="form-select" id="demoRoleSelect">
+                            <option value="student">Ananya Sharma (Student Profile)</option>
+                            <option value="instructor">Rohit Sen (Instructor Profile)</option>
+                            <option value="admin">Meera Nair (Platform Administrator)</option>
+                        </select>
+                        <span class="form-text text-xs">Simulates login values directly into LocalStorage to review role layouts.</span>
+                    </div>
+
+                    <!-- Login Submit -->
+                    <button type="submit" id="submitBtn" class="btn btn-primary btn-lg w-100 mb-4">
+                        Sign In
+                    </button>
+
+                    <p class="text-center text-small">
+                        Don't have an account? <a href="register.html" class="fw-semibold">Sign Up</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast notifier element placeholder -->
+    <script type="module">
+        import { ThemeManager } from './assets/js/components/theme.js';
+        import { Validator } from './assets/js/utils/validator.js';
+        import { Toast } from './assets/js/components/toast.js';
+        import { Loader } from './assets/js/components/loader.js';
+        import { Storage } from './assets/js/config/storage.js';
+        import { STORAGE_KEYS, ROUTES } from './assets/js/config/constants.js';
+
+        // Load Theme System
+        ThemeManager.init();
+
+        const form = document.getElementById('loginForm');
+        const emailInput = document.getElementById('emailInput');
+        const passwordInput = document.getElementById('passwordInput');
+        const demoRoleSelect = document.getElementById('demoRoleSelect');
+        const submitBtn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Clear invalid states
+            emailInput.classList.remove('is-invalid');
+            passwordInput.classList.remove('is-invalid');
+
+            // Perform client-side validation using modules
+            const emailValidation = Validator.validateEmail(emailInput.value);
+            const passwordValidation = Validator.validateRequired(passwordInput.value, 'Password');
+
+            let hasErrors = false;
+
+            if (!emailValidation.isValid) {
+                emailInput.classList.add('is-invalid');
+                document.getElementById('emailError').textContent = emailValidation.errorMsg;
+                hasErrors = true;
+            }
+
+            if (!passwordValidation.isValid) {
+                passwordInput.classList.add('is-invalid');
+                document.getElementById('passwordError').textContent = passwordValidation.errorMsg;
+                hasErrors = true;
+            }
+
+            if (hasErrors) {
+                Toast.error('Please resolve the errors before signing in.');
+                return;
+            }
+
+            // Simulate loading state
+            Loader.setButtonLoading(submitBtn, true);
+
+            setTimeout(() => {
+                Loader.setButtonLoading(submitBtn, false);
+
+                // Fetch select role details
+                const selectedRole = demoRoleSelect.value;
+                let fullName = 'Ananya Sharma';
+                if (selectedRole === 'instructor') fullName = 'Rohit Sen';
+                if (selectedRole === 'admin') fullName = 'Meera Nair';
+
+                // Save dummy JWT tokens & profile to storage for client routing Guard checks
+                Storage.set(STORAGE_KEYS.ACCESS_TOKEN, `mock_jwt_access_token_${selectedRole}`);
+                Storage.set(STORAGE_KEYS.REFRESH_TOKEN, `mock_jwt_refresh_token_${selectedRole}`);
+                Storage.set(STORAGE_KEYS.USER_INFO, {
+                    id: 'mock-user-uuid',
+                    full_name: fullName,
+                    email: emailInput.value || `${selectedRole}@vertexlearn.ai`,
+                    role: selectedRole
+                });
+
+                Toast.success(`Welcome back, ${fullName}! Launching dashboard...`);
+
+                // Navigate to layout route matching role selection
+                setTimeout(() => {
+                    if (selectedRole === 'student') window.location.href = ROUTES.STUDENT_DASHBOARD;
+                    if (selectedRole === 'instructor') window.location.href = ROUTES.INSTRUCTOR_DASHBOARD;
+                    if (selectedRole === 'admin') window.location.href = ROUTES.ADMIN_DASHBOARD;
+                }, 1000);
+
+            }, 1200);
+        });
+    </script>
+</body>
+</html>

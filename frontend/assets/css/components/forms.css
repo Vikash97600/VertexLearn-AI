@@ -1,0 +1,147 @@
+/* forms.css - Form Inputs, Validation Styles, and Custom Elements */
+
+.form-label {
+    font-size: 0.875rem; /* 14px */
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: var(--space-2);
+    display: inline-block;
+}
+
+.form-control, .form-select {
+    font-size: 0.875rem; /* 14px */
+    padding: 0.625rem 0.875rem;
+    border-radius: var(--radius-md);
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: var(--bg-primary);
+    border-color: var(--brand-primary);
+    color: var(--text-primary);
+    outline: none;
+    box-shadow: var(--focus-ring-shadow);
+}
+
+.form-control:disabled, .form-select:disabled {
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+    cursor: not-allowed;
+}
+
+/* Custom Textarea */
+textarea.form-control {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Custom Checkbox and Radio (Stripe style) */
+.form-check-input {
+    width: 1.125rem;
+    height: 1.125rem;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    margin-top: 0.15rem;
+}
+
+.form-check-input[type="radio"] {
+    border-radius: var(--radius-full);
+}
+
+.form-check-input:focus {
+    box-shadow: var(--focus-ring-shadow);
+    border-color: var(--brand-primary);
+}
+
+.form-check-input:checked {
+    background-color: var(--brand-primary);
+    border-color: var(--brand-primary);
+}
+
+.form-check-label {
+    font-size: 0.875rem; /* 14px */
+    color: var(--text-secondary);
+    cursor: pointer;
+    user-select: none;
+    padding-left: var(--space-1);
+}
+
+/* Form Helper Text */
+.form-text {
+    font-size: 0.75rem; /* 12px */
+    color: var(--text-secondary);
+    margin-top: var(--space-1);
+}
+
+/* Client Side Form Validation Feedback */
+.invalid-feedback {
+    display: none;
+    font-size: 0.75rem; /* 12px */
+    color: var(--brand-danger);
+    margin-top: var(--space-1);
+    font-weight: 500;
+}
+
+.is-invalid {
+    border-color: var(--brand-danger) !important;
+}
+
+.is-invalid:focus {
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15) !important;
+}
+
+.is-invalid ~ .invalid-feedback {
+    display: block;
+}
+
+.is-valid {
+    border-color: var(--brand-success) !important;
+}
+
+.is-valid:focus {
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15) !important;
+}
+
+/* Search Input Group Overlay */
+.search-wrapper {
+    position: relative;
+}
+
+.search-wrapper i {
+    position: absolute;
+    left: var(--space-3);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    pointer-events: none;
+}
+
+.search-wrapper .form-control {
+    padding-left: 2.25rem;
+}
+
+/* Keyboard Shortcut indicator inside search */
+.search-kbd {
+    position: absolute;
+    right: var(--space-3);
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    pointer-events: none;
+}

@@ -1,0 +1,62 @@
+/* dark-theme.css - Dark Mode Variables Override */
+
+html.dark-theme {
+    --bg-primary: #09090B;      /* Dark Background */
+    --bg-secondary: #121214;    /* Subtle dark secondary */
+    --bg-sidebar: #0C0C0E;      /* Rich dark sidebar */
+    --bg-card: #18181B;         /* Dark Card */
+    --text-primary: #F4F4F5;    /* Off-white primary text */
+    --text-secondary: #A1A1AA;  /* Zinc-400 secondary text */
+    --text-muted: #52525B;      /* Zinc-600 muted text */
+    --border-color: #2A2A2A;    /* Dark Border */
+
+    /* Focus ring for dark mode */
+    --focus-ring-color: rgba(37, 99, 235, 0.4);
+
+    /* Shadow adjustments for dark background */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.25);
+    --shadow-premium: 0 1px 3px 0 rgba(0, 0, 0, 0.5), 0 10px 20px -5px rgba(0, 0, 0, 0.4);
+
+    /* Glassmorphism adjustment for dark background */
+    --glass-panel: rgba(18, 18, 20, 0.7);
+
+    /* Override Bootstrap variables mapped in root */
+    --bs-body-bg: var(--bg-primary);
+    --bs-body-color: var(--text-primary);
+    --bs-border-color: var(--border-color);
+}
+
+/* Specific elements dark overrides */
+html.dark-theme .form-control, 
+html.dark-theme .form-select {
+    background-color: #121214;
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+html.dark-theme .form-control::placeholder {
+    color: #52525B;
+}
+
+html.dark-theme .form-control:focus,
+html.dark-theme .form-select:focus {
+    background-color: #121214;
+    border-color: var(--brand-primary);
+}
+
+html.dark-theme .btn-secondary-custom {
+    background-color: #18181B;
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+html.dark-theme .btn-secondary-custom:hover {
+    background-color: #27272A;
+    border-color: #3F3F46;
+}
+
+html.dark-theme .public-header {
+    background-color: rgba(9, 9, 11, 0.8);
+}

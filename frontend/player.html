@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Player - VertexLearn AI</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Custom Style Sheet Foundation -->
+    <link rel="stylesheet" href="./assets/css/base/variables.css">
+    <link rel="stylesheet" href="./assets/css/base/typography.css">
+    <link rel="stylesheet" href="./assets/css/components/buttons.css">
+    <link rel="stylesheet" href="./assets/css/components/cards.css">
+    <link rel="stylesheet" href="./assets/css/components/forms.css">
+    <link rel="stylesheet" href="./assets/css/components/tables.css">
+    <link rel="stylesheet" href="./assets/css/components/animations.css">
+    <link rel="stylesheet" href="./assets/css/components/utilities.css">
+    <link rel="stylesheet" href="./assets/css/layout/layout.css">
+    <link rel="stylesheet" href="./assets/css/layout/sidebar.css">
+    <link rel="stylesheet" href="./assets/css/layout/header.css">
+    <link rel="stylesheet" href="./assets/css/layout/footer.css">
+    <link rel="stylesheet" href="./assets/css/themes/dark-theme.css">
+    <link rel="stylesheet" href="./assets/css/utilities/responsive.css">
+
+    <!-- Route Guarding & Theme Bootstrapping (Sync instantly) -->
+    <script type="module">
+        import { Router } from './assets/js/config/router.js';
+        Router.guardRoute();
+    </script>
+    <script>
+        (function() {
+            const theme = localStorage.getItem('vertexlearn_theme');
+            if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark-theme');
+            }
+        })();
+    </script>
+    <style>
+        /* Course player layout grid specific overrides */
+        .player-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            min-height: 100vh;
+        }
+        @media (min-width: 992px) {
+            .player-layout {
+                grid-template-columns: 1fr 320px; /* Video panel + Syllabus index panel */
+            }
+        }
+        
+        .player-video-container {
+            background-color: #000;
+            aspect-ratio: 16 / 9;
+            position: relative;
+            width: 100%;
+        }
+        
+        .player-video-mock {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: #fff;
+            background: linear-gradient(135deg, #09090b 0%, #1e293b 100%);
+        }
+
+        .syllabus-sidebar {
+            background-color: var(--bg-sidebar);
+            border-left: 1px solid var(--border-color);
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .chat-messages-container {
+            height: 320px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: var(--space-4);
+            background-color: var(--bg-secondary);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-3);
+        }
+
+        .chat-bubble {
+            max-width: 80%;
+            padding: var(--space-3) var(--space-4);
+            border-radius: var(--radius-lg);
+            font-size: 0.875rem;
+        }
+
+        .chat-bubble.user {
+            background-color: var(--brand-primary);
+            color: #fff;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-bubble.ai {
+            background-color: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .cite-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body class="bg-primary">
+
+    <div class="player-layout">
+        <!-- Left Panel (Video Player + Tab Interactions) -->
+        <div class="d-flex flex-column" style="height: 100vh; overflow-y: auto;">
+            <!-- Header bar for player -->
+            <div class="header px-4">
+                <div class="header-left">
+                    <a href="student.html" class="btn btn-ghost btn-icon" title="Back to Dashboard">
+                        <i class="bi bi-arrow-left fs-5"></i>
+                    </a>
+                    <div>
+                        <h6 class="fw-semibold mb-0" id="playerCourseTitle">Data Structures & Algorithms (Advanced)</h6>
+                        <small class="text-xs text-secondary-custom">Lecture 4: Traversing Binary Search Trees</small>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="btn btn-ghost theme-toggle-btn px-2" id="themeToggleBtn" aria-label="Toggle Theme">
+                        <i class="bi bi-moon"></i>
+                    </button>
+                    <span class="badge-custom badge-info-custom" id="timeRemaining">Duration: 12:45</span>
+                </div>
+            </div>
+
+            <!-- Video Player Mock -->
+            <div class="player-video-container">
+                <div class="player-video-mock">
+                    <i class="bi bi-play-circle-fill text-primary" style="font-size: 4rem; cursor: pointer;" id="playMockVideoBtn"></i>
+                    <p class="mt-3 text-secondary mb-0">Simulated Lecture Video (12:45)</p>
+                    
+                    <!-- Speed & Volume Controls -->
+                    <div class="position-absolute bottom-0 start-0 w-100 p-3 d-flex justify-content-between align-items-center bg-dark bg-opacity-70 text-white" style="font-size: 0.875rem;">
+                        <div class="d-flex align-items-center gap-3">
+                            <button class="btn btn-link text-white p-0" id="videoPlayPause"><i class="bi bi-play-fill fs-5"></i></button>
+                            <span id="videoTime">02:15 / 12:45</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-3">
+                            <select class="form-select form-select-sm bg-transparent border-white text-white p-1" style="width: 70px;" id="speedControl">
+                                <option value="1" class="text-dark">1.0x</option>
+                                <option value="1.25" class="text-dark">1.25x</option>
+                                <option value="1.5" class="text-dark" selected>1.5x</option>
+                                <option value="2" class="text-dark">2.0x</option>
+                            </select>
+                            <button class="btn btn-ghost btn-sm text-white p-0" id="volumeBtn"><i class="bi bi-volume-up-fill"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs Navigation -->
+            <div class="border-bottom bg-secondary px-4">
+                <ul class="nav nav-tabs border-bottom-0 gap-3" id="playerTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active py-3 border-0 bg-transparent text-secondary-custom fw-semibold" id="ai-tutor-tab" data-bs-toggle="tab" data-bs-target="#ai-tutor" type="button" role="tab" aria-controls="ai-tutor" aria-selected="true">
+                            <i class="bi bi-cpu me-1"></i> AI Tutor
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link py-3 border-0 bg-transparent text-secondary-custom fw-semibold" id="notes-tab" data-bs-toggle="tab" data-bs-target="#notes" type="button" role="tab" aria-controls="notes" aria-selected="false">
+                            <i class="bi bi-journal-text me-1"></i> Notes
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link py-3 border-0 bg-transparent text-secondary-custom fw-semibold" id="bookmarks-tab" data-bs-toggle="tab" data-bs-target="#bookmarks" type="button" role="tab" aria-controls="bookmarks" aria-selected="false">
+                            <i class="bi bi-bookmark me-1"></i> Bookmarks
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Tabs Content Area -->
+            <div class="tab-content content-area" id="playerTabContent">
+                <!-- AI Tutor Panel -->
+                <div class="tab-pane fade show active" id="ai-tutor" role="tabpanel" aria-labelledby="ai-tutor-tab">
+                    <div class="d-flex flex-column gap-3">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <h5 class="mb-0 text-body fw-bold">AI Chat Session</h5>
+                            <select class="form-select form-select-sm" style="width: 150px;" id="aiModeSelect">
+                                <option value="beginner">Beginner Mode</option>
+                                <option value="intermediate" selected>Intermediate Mode</option>
+                                <option value="advanced">Advanced Mode</option>
+                            </select>
+                        </div>
+                        <div class="chat-messages-container" id="chatMessages">
+                            <div class="chat-bubble ai">
+                                Hello! Ask me any questions about binary tree traversals (In-order, Pre-order, Post-order). I am grounded in this lecture's ingested transcript.
+                            </div>
+                        </div>
+                        <form id="chatForm">
+                            <div class="input-group">
+                                <input type="text" id="chatInput" class="form-control" placeholder="Ask the AI Tutor a question..." required>
+                                <button type="submit" class="btn btn-primary">Send</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Notes Panel -->
+                <div class="tab-pane fade" id="notes" role="tabpanel" aria-labelledby="notes-tab">
+                    <div class="mb-4">
+                        <label for="noteInput" class="form-label">Create Note at <span id="currentNoteTimestamp" class="fw-semibold">02:15</span></label>
+                        <div class="d-flex gap-2">
+                            <input type="text" id="noteInput" class="form-control" placeholder="Write down something important..." required>
+                            <button class="btn btn-primary" id="addNoteBtn">Save Note</button>
+                        </div>
+                    </div>
+                    <div id="notesList" class="d-flex flex-column gap-3">
+                        <!-- Example Note -->
+                        <div class="card p-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge-custom badge-info-custom" style="cursor: pointer;">Timestamp 01:10</span>
+                                <small class="text-xs text-muted-custom">2 hours ago</small>
+                            </div>
+                            <p class="text-small mb-0">BST in-order traversal always visits node elements in sorted order.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bookmarks Panel -->
+                <div class="tab-pane fade" id="bookmarks" role="tabpanel" aria-labelledby="bookmarks-tab">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <span class="text-small">Flag milestones to resume watching later.</span>
+                        <button class="btn btn-primary btn-sm" id="addBookmarkBtn"><i class="bi bi-bookmark-fill"></i> Bookmark current time (02:15)</button>
+                    </div>
+                    <div id="bookmarksList" class="d-flex flex-column gap-2">
+                        <!-- Bookmarks -->
+                        <div class="d-flex justify-content-between align-items-center p-3 border rounded-3 hover-bg">
+                            <span class="fw-medium text-small"><i class="bi bi-bookmark-fill text-primary me-2"></i> Bookmark at 00:45</span>
+                            <button class="btn btn-ghost btn-sm px-2"><i class="bi bi-play-fill"></i> Play</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel (Syllabus Course Index) -->
+        <div class="syllabus-sidebar d-flex flex-column">
+            <div class="p-4 border-bottom bg-secondary">
+                <h5 class="h6 fw-bold mb-1">Course Content</h5>
+                <div class="progress" style="height: 6px; background-color: var(--border-color);">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <small class="text-xs text-secondary-custom d-block mt-2">1 of 3 Modules Completed</small>
+            </div>
+
+            <div class="sidebar-nav">
+                <!-- Module 1 -->
+                <span class="sidebar-section-header">Module 1: Linear Arrays & Lists</span>
+                <a href="#" class="sidebar-link active">
+                    <i class="bi bi-check-circle-fill text-success"></i>
+                    <span class="sidebar-link-text">1. Linear Array Operations</span>
+                </a>
+                <a href="#" class="sidebar-link active">
+                    <i class="bi bi-check-circle-fill text-success"></i>
+                    <span class="sidebar-link-text">2. Singly Linked Lists</span>
+                </a>
+
+                <!-- Module 2 -->
+                <span class="sidebar-section-header">Module 2: Non-Linear Trees</span>
+                <a href="#" class="sidebar-link active">
+                    <i class="bi bi-play-circle-fill text-primary animate-pulse"></i>
+                    <span class="sidebar-link-text">3. Binary Search Trees Intro</span>
+                </a>
+                <a href="#" class="sidebar-link">
+                    <i class="bi bi-circle"></i>
+                    <span class="sidebar-link-text">4. Tree Traversals</span>
+                </a>
+
+                <!-- Module 3 -->
+                <span class="sidebar-section-header">Module 3: Sorting & Searching</span>
+                <a href="#" class="sidebar-link">
+                    <i class="bi bi-circle"></i>
+                    <span class="sidebar-link-text">5. Quicksort Complexity</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script type="module">
+        import { ThemeManager } from './assets/js/components/theme.js';
+        import { Toast } from './assets/js/components/toast.js';
+        import { Formatter } from './assets/js/utils/formatter.js';
+
+        ThemeManager.init();
+
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', () => ThemeManager.toggle());
+        }
+
+        // Mock Play button
+        let isPlaying = false;
+        document.getElementById('playMockVideoBtn').addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            const btn = document.getElementById('playMockVideoBtn');
+            const playControl = document.getElementById('videoPlayPause');
+            if (isPlaying) {
+                btn.className = 'bi bi-pause-circle-fill text-primary';
+                playControl.innerHTML = '<i class="bi bi-pause-fill fs-5"></i>';
+                Toast.info('Playing simulated lecture video.');
+            } else {
+                btn.className = 'bi bi-play-circle-fill text-primary';
+                playControl.innerHTML = '<i class="bi bi-play-fill fs-5"></i>';
+                Toast.info('Paused video.');
+            }
+        });
+
+        // Chat form simulated client-side RAG interaction
+        const chatForm = document.getElementById('chatForm');
+        const chatInput = document.getElementById('chatInput');
+        const chatMessages = document.getElementById('chatMessages');
+
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const text = chatInput.value;
+            if (!text.trim()) return;
+
+            // Render User bubble
+            const userBubble = document.createElement('div');
+            userBubble.className = 'chat-bubble user';
+            userBubble.textContent = text;
+            chatMessages.appendChild(userBubble);
+            
+            chatInput.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Simulate RAG reply with source citation
+            setTimeout(() => {
+                const aiBubble = document.createElement('div');
+                aiBubble.className = 'chat-bubble ai';
+                
+                let reply = `That is an interesting question. In Binary Trees, in-order traversal follows the Left-Root-Right pattern. Let me citation references to lecture slides.`;
+                if (text.toLowerCase().includes('quicksort') || text.toLowerCase().includes('pivot')) {
+                    reply = `Quicksort degrades to O(n^2) when the pivot divides the arrays unevenly (such as picking first elements on already sorted input).`;
+                }
+
+                aiBubble.innerHTML = `
+                    <div>${reply}</div>
+                    <a href="#" class="cite-badge"><i class="bi bi-link-45deg"></i> Source: Module 2 Slide 12</a>
+                `;
+                chatMessages.appendChild(aiBubble);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                Toast.success('AI Tutor resolved doubt.');
+            }, 1000);
+        });
+
+        // Notes mock insertion
+        document.getElementById('addNoteBtn').addEventListener('click', () => {
+            const val = document.getElementById('noteInput').value;
+            if (!val.trim()) return;
+
+            const list = document.getElementById('notesList');
+            const card = document.createElement('div');
+            card.className = 'card p-3';
+            card.innerHTML = `
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="badge-custom badge-info-custom">Timestamp 02:15</span>
+                    <small class="text-xs text-muted-custom">Just now</small>
+                </div>
+                <p class="text-small mb-0">${val}</p>
+            `;
+            list.insertBefore(card, list.firstChild);
+            document.getElementById('noteInput').value = '';
+            Toast.success('Note saved at timestamp.');
+        });
+
+        // Bookmarks mock insertion
+        document.getElementById('addBookmarkBtn').addEventListener('click', () => {
+            const list = document.getElementById('bookmarksList');
+            const row = document.createElement('div');
+            row.className = 'd-flex justify-content-between align-items-center p-3 border rounded-3 hover-bg';
+            row.innerHTML = `
+                <span class="fw-medium text-small"><i class="bi bi-bookmark-fill text-primary me-2"></i> Bookmark at 02:15</span>
+                <button class="btn btn-ghost btn-sm px-2"><i class="bi bi-play-fill"></i> Play</button>
+            `;
+            list.insertBefore(row, list.firstChild);
+            Toast.success('Bookmark saved at timestamp.');
+        });
+
+    </script>
+</body>
+</html>

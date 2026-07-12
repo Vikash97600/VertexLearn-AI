@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructor Workspace - VertexLearn AI</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Custom Style Sheet Foundation -->
+    <link rel="stylesheet" href="./assets/css/base/variables.css">
+    <link rel="stylesheet" href="./assets/css/base/typography.css">
+    <link rel="stylesheet" href="./assets/css/components/buttons.css">
+    <link rel="stylesheet" href="./assets/css/components/cards.css">
+    <link rel="stylesheet" href="./assets/css/components/forms.css">
+    <link rel="stylesheet" href="./assets/css/components/tables.css">
+    <link rel="stylesheet" href="./assets/css/components/animations.css">
+    <link rel="stylesheet" href="./assets/css/components/utilities.css">
+    <link rel="stylesheet" href="./assets/css/layout/layout.css">
+    <link rel="stylesheet" href="./assets/css/layout/sidebar.css">
+    <link rel="stylesheet" href="./assets/css/layout/header.css">
+    <link rel="stylesheet" href="./assets/css/layout/footer.css">
+    <link rel="stylesheet" href="./assets/css/themes/dark-theme.css">
+    <link rel="stylesheet" href="./assets/css/utilities/responsive.css">
+
+    <!-- Route Guarding & Theme Bootstrapping (Sync instantly) -->
+    <script type="module">
+        import { Router } from './assets/js/config/router.js';
+        Router.guardRoute();
+    </script>
+    <script>
+        (function() {
+            const theme = localStorage.getItem('vertexlearn_theme');
+            if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark-theme');
+            }
+        })();
+    </script>
+</head>
+<body class="bg-primary">
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="appSidebar">
+            <div class="sidebar-brand">
+                <span class="sidebar-brand-text">VertexLearn<span class="text-primary">.AI</span></span>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="instructor.html" class="sidebar-link active">
+                    <i class="bi bi-grid-1x2"></i>
+                    <span class="sidebar-link-text">My Courses</span>
+                </a>
+                <a href="#" class="sidebar-link">
+                    <i class="bi bi-file-earmark-plus"></i>
+                    <span class="sidebar-link-text">Upload Lectures</span>
+                </a>
+                
+                <span class="sidebar-section-header">Evaluation</span>
+                <a href="#" class="sidebar-link">
+                    <i class="bi bi-clipboard-check"></i>
+                    <span class="sidebar-link-text">Assignments</span>
+                </a>
+                <a href="#" class="sidebar-link">
+                    <i class="bi bi-patch-question"></i>
+                    <span class="sidebar-link-text">Quiz Approvals</span>
+                </a>
+
+                <span class="sidebar-section-header">Analytics</span>
+                <a href="#" class="sidebar-link">
+                    <i class="bi bi-graph-up-arrow"></i>
+                    <span class="sidebar-link-text">Engagement</span>
+                </a>
+                <a href="#" class="sidebar-link">
+                    <i class="bi bi-gear"></i>
+                    <span class="sidebar-link-text">Workspace Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="btn btn-secondary-custom w-100 theme-toggle-btn justify-content-center" id="themeToggleBtn">
+                    <i class="bi bi-moon"></i>
+                    <span class="sidebar-link-text ms-1">Toggle Theme</span>
+                </button>
+                
+                <a href="#" class="sidebar-profile">
+                    <div class="avatar bg-secondary border d-flex align-items-center justify-content-center">
+                        <i class="bi bi-person text-secondary"></i>
+                    </div>
+                    <div class="sidebar-profile-info">
+                        <div class="fw-semibold text-small" id="sidebarProfileName">Rohit Sen</div>
+                        <div class="text-xs text-secondary-custom">Instructor</div>
+                    </div>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content" id="mainContent">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="sidebar-toggler" id="sidebarToggler" aria-label="Toggle Sidebar">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <button class="sidebar-toggler mobile-only" id="mobileSidebarToggler" aria-label="Open Navigation">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    
+                    <div class="search-wrapper desktop-only">
+                        <i class="bi bi-search"></i>
+                        <input type="text" id="globalSearchInput" class="form-control" placeholder="Search my courses, materials..." style="width: 280px;">
+                        <span class="search-kbd">Ctrl+K</span>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="notification-bell-container" id="notificationTrigger">
+                        <button class="btn btn-ghost btn-icon">
+                            <i class="bi bi-bell"></i>
+                            <span class="notification-badge"></span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end profile-dropdown-menu" id="notificationDropdown" style="width: 320px;">
+                            <div class="profile-dropdown-header">
+                                <h6 class="fw-bold mb-0">Notifications</h6>
+                            </div>
+                            <div id="notificationsList" style="max-height: 285px; overflow-y: auto;">
+                                <!-- Filled by JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="position-relative">
+                        <div class="avatar bg-secondary border d-flex align-items-center justify-content-center cursor-pointer" id="profileTrigger">
+                            <i class="bi bi-person text-secondary"></i>
+                        </div>
+                        <div class="dropdown-menu dropdown-menu-end profile-dropdown-menu" id="profileDropdown">
+                            <div class="profile-dropdown-header">
+                                <div class="profile-dropdown-name" id="dropdownProfileName">Rohit Sen</div>
+                                <div class="profile-dropdown-email" id="dropdownProfileEmail">rohit@vertexlearn.ai</div>
+                            </div>
+                            <a href="#" class="profile-dropdown-item"><i class="bi bi-person"></i> My Profile</a>
+                            <a href="#" class="profile-dropdown-item"><i class="bi bi-graph-up-arrow"></i> My Analytics</a>
+                            <hr class="dropdown-divider">
+                            <button id="logoutBtn" class="profile-dropdown-item danger bg-transparent border-0 w-100"><i class="bi bi-box-arrow-right"></i> Sign Out</button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content Shell -->
+            <main class="content-area">
+                <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-5 gap-3">
+                    <div>
+                        <h1 class="h3 mb-1">My Courses</h1>
+                        <p class="text-small mb-0">Author new modules, manage lecture materials, and approve generated quizzes.</p>
+                    </div>
+                    <button class="btn btn-primary" id="openCreateCourseModalBtn">
+                        <i class="bi bi-plus-lg"></i> Create Course
+                    </button>
+                </div>
+
+                <!-- Course List Table -->
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Course Title</th>
+                                <th>Category</th>
+                                <th>Difficulty</th>
+                                <th>Lectures</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="courseTableBody">
+                            <!-- Course 1 -->
+                            <tr>
+                                <td class="fw-semibold">Data Structures & Algorithms (Advanced)</td>
+                                <td>Computer Science</td>
+                                <td>Advanced</td>
+                                <td>18 Lectures</td>
+                                <td><span class="badge-custom badge-success-custom">Approved</span></td>
+                                <td>
+                                    <button class="btn btn-ghost btn-sm">Manage</button>
+                                </td>
+                            </tr>
+                            <!-- Course 2 -->
+                            <tr>
+                                <td class="fw-semibold">System Design Patterns for SaaS</td>
+                                <td>Software Engineering</td>
+                                <td>Advanced</td>
+                                <td>8 Lectures</td>
+                                <td><span class="badge-custom badge-warning-custom">Pending</span></td>
+                                <td>
+                                    <button class="btn btn-ghost btn-sm">Manage</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+
+            <!-- Footer -->
+            <footer class="dashboard-footer">
+                <div>&copy; 2026 VertexLearn AI. All rights reserved.</div>
+                <div class="dashboard-footer-links">
+                    <a href="#">Help Center</a>
+                    <a href="#">Privacy</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Create Course Bootstrap Modal Dialog -->
+    <div class="modal fade" id="createCourseModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: var(--radius-lg);">
+                <div class="modal-header border-bottom-0 pb-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+                    <h5 class="modal-title fw-bold fs-5">Create New Course</h5>
+                    <button type="button" class="btn-close border-0 bg-transparent fs-4 text-secondary" data-bs-dismiss="modal" aria-label="Close">×</button>
+                </div>
+                <form id="createCourseForm">
+                    <div class="modal-body py-3 px-4">
+                        <div class="mb-3">
+                            <label for="courseTitleInput" class="form-label">Course Title</label>
+                            <input type="text" class="form-control" id="courseTitleInput" placeholder="e.g. Advanced Python Patterns" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="courseCategorySelect" class="form-label">Category</label>
+                            <select class="form-select" id="courseCategorySelect">
+                                <option value="Computer Science">Computer Science</option>
+                                <option value="Software Engineering">Software Engineering</option>
+                                <option value="Data Science">Data Science</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="courseDifficultySelect" class="form-label">Difficulty</label>
+                            <select class="form-select" id="courseDifficultySelect">
+                                <option value="Beginner">Beginner</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-top-0 pt-0 pb-4 px-4 d-flex gap-2 justify-content-end">
+                        <button type="button" class="btn btn-secondary-custom" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="saveCourseBtn">Create Course</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script type="module">
+        import { ThemeManager } from './assets/js/components/theme.js';
+        import { Sidebar } from './assets/js/components/sidebar.js';
+        import { Navbar } from './assets/js/components/navbar.js';
+        import { Toast } from './assets/js/components/toast.js';
+        import { Loader } from './assets/js/components/loader.js';
+        import { Storage } from './assets/js/config/storage.js';
+        import { STORAGE_KEYS, ROUTES } from './assets/js/config/constants.js';
+
+        // Load visual layout controls
+        ThemeManager.init();
+        Sidebar.init();
+        Navbar.init();
+
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', () => ThemeManager.toggle());
+        }
+
+        // Set Profile details dynamically from LocalStorage
+        const user = Storage.get(STORAGE_KEYS.USER_INFO);
+        if (user) {
+            document.getElementById('sidebarProfileName').textContent = user.full_name;
+            document.getElementById('dropdownProfileName').textContent = user.full_name;
+            document.getElementById('dropdownProfileEmail').textContent = user.email;
+        }
+
+        // Render notifications mock data
+        const mockNotifs = [
+            { id: 1, title: 'Course Approved', body: 'Your course "Data Structures & Algorithms" has been approved.', is_read: false }
+        ];
+        Navbar.renderNotifications(mockNotifs, document.getElementById('notificationsList'));
+
+        // Handle logout
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            Storage.remove(STORAGE_KEYS.ACCESS_TOKEN);
+            Storage.remove(STORAGE_KEYS.REFRESH_TOKEN);
+            Storage.remove(STORAGE_KEYS.USER_INFO);
+            Toast.info('Signed out successfully.');
+            setTimeout(() => {
+                window.location.href = ROUTES.LOGIN;
+            }, 800);
+        });
+
+        // Modal handler
+        const courseModalNode = document.getElementById('createCourseModal');
+        const courseModal = new bootstrap.Modal(courseModalNode);
+        
+        document.getElementById('openCreateCourseModalBtn').addEventListener('click', () => {
+            courseModal.show();
+        });
+
+        // Form Submit Handler
+        document.getElementById('createCourseForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const title = document.getElementById('courseTitleInput').value;
+            const category = document.getElementById('courseCategorySelect').value;
+            const difficulty = document.getElementById('courseDifficultySelect').value;
+            
+            const submitBtn = document.getElementById('saveCourseBtn');
+            Loader.setButtonLoading(submitBtn, true);
+
+            setTimeout(() => {
+                Loader.setButtonLoading(submitBtn, false);
+                courseModal.hide();
+                
+                // Add course dynamically to visual table list
+                const tbody = document.getElementById('courseTableBody');
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="fw-semibold">${title}</td>
+                    <td>${category}</td>
+                    <td>${difficulty}</td>
+                    <td>0 Lectures</td>
+                    <td><span class="badge-custom badge-warning-custom">Pending</span></td>
+                    <td>
+                        <button class="btn btn-ghost btn-sm">Manage</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+
+                Toast.success(`Course "${title}" created as draft and submitted for approval.`);
+                document.getElementById('createCourseForm').reset();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

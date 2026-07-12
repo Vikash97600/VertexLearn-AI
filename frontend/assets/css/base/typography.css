@@ -1,0 +1,112 @@
+/* typography.css - Global Font Hierarchy and Base Text Styles */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px; /* Body size */
+    line-height: 1.6;
+    letter-spacing: -0.011em;
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Heading Typography */
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--text-primary);
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.022em;
+    margin-bottom: var(--space-3);
+}
+
+/* Font Hierarchy */
+.text-hero {
+    font-size: 4.5rem; /* 72px */
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+}
+
+h1, .h1 {
+    font-size: 3rem; /* 48px */
+    font-weight: 700;
+    letter-spacing: -0.03em;
+}
+
+h2, .h2 {
+    font-size: 2.25rem; /* 36px */
+    letter-spacing: -0.025em;
+}
+
+h3, .h3 {
+    font-size: 1.875rem; /* 30px */
+    letter-spacing: -0.02em;
+}
+
+h4, .h4 {
+    font-size: 1.5rem; /* 24px */
+    letter-spacing: -0.015em;
+}
+
+h5, .h5 {
+    font-size: 1.25rem; /* 20px */
+    letter-spacing: -0.01em;
+}
+
+h6, .h6 {
+    font-size: 1rem; /* 16px */
+    letter-spacing: -0.005em;
+}
+
+.text-body {
+    font-size: 1rem; /* 16px */
+    line-height: 1.625;
+}
+
+.text-small {
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.5;
+    color: var(--text-secondary);
+}
+
+.text-xs {
+    font-size: 0.75rem; /* 12px */
+    line-height: 1.4;
+    color: var(--text-secondary);
+}
+
+/* Font Weights */
+.fw-light { font-weight: 300; }
+.fw-regular { font-weight: 400; }
+.fw-medium { font-weight: 500; }
+.fw-semibold { font-weight: 600; }
+.fw-bold { font-weight: 700; }
+
+/* Notion/Stripe Style Elements */
+p {
+    margin-bottom: var(--space-4);
+    color: var(--text-secondary);
+}
+
+a {
+    color: var(--brand-primary);
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+a:hover {
+    color: var(--brand-primary-hover);
+    text-decoration: none;
+}
+
+/* Secondary Typography helper classes */
+.text-secondary-custom {
+    color: var(--text-secondary) !important;
+}
+
+.text-muted-custom {
+    color: var(--text-muted) !important;
+}
