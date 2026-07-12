@@ -1,0 +1,478 @@
+/* landing.css - Core Landing Page Layouts and Premium Visual Effects */
+
+/* Sticky Navigation Transition */
+.navbar-landing {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    z-index: 1080;
+    transition: background-color var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
+    border-bottom: 1px solid transparent;
+}
+
+.navbar-landing.scrolled {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-color: var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+html.dark-theme .navbar-landing.scrolled {
+    background-color: rgba(9, 9, 11, 0.8) !important;
+    border-color: var(--border-color);
+}
+
+.nav-link-landing {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+}
+
+.nav-link-landing:hover {
+    color: var(--text-primary);
+}
+
+/* Sections Spacer (Breathing room) */
+.landing-section {
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-8);
+    position: relative;
+    overflow: hidden;
+}
+
+@media (min-width: 992px) {
+    .landing-section {
+        padding-top: 120px;
+        padding-bottom: 120px;
+    }
+}
+
+.bg-light-section {
+    background-color: var(--bg-secondary);
+}
+
+/* Hero Section Graphics */
+.hero-wrapper {
+    padding-top: calc(var(--header-height) + var(--space-5));
+}
+
+/* Laptop Mockup Wrapper */
+.laptop-mockup {
+    position: relative;
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto;
+    border: 12px solid #111827; /* Dark bezel */
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    background-color: #000;
+    box-shadow: var(--shadow-lg), 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+.laptop-base {
+    width: 100%;
+    height: 16px;
+    background-color: #374151;
+    border-radius: 0 0 12px 12px;
+    max-width: 940px;
+    margin: 0 auto;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.laptop-screen {
+    aspect-ratio: 16 / 10;
+    background-color: var(--bg-primary);
+    overflow-y: auto;
+}
+
+/* Floating Stats & Completion Cards */
+.floating-card {
+    position: absolute;
+    z-index: 10;
+    box-shadow: var(--shadow-lg);
+    animation: float 6s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.floating-card-1 {
+    top: 20%;
+    left: -60px;
+    animation-delay: 0s;
+}
+
+.floating-card-2 {
+    bottom: 25%;
+    right: -60px;
+    animation-delay: 2s;
+}
+
+.floating-card-3 {
+    top: 15%;
+    right: -40px;
+    animation-delay: 4s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Hide floating cards on small screens */
+@media (max-width: 1200px) {
+    .floating-card {
+        display: none !important;
+    }
+}
+
+/* Trusted By Companies Horizontal Scroll */
+.marquee-container {
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: var(--space-4) 0;
+}
+
+.marquee-container::before,
+.marquee-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 100px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.marquee-container::before {
+    left: 0;
+    background: linear-gradient(to right, var(--bg-primary), transparent);
+}
+
+.marquee-container::after {
+    right: 0;
+    background: linear-gradient(to left, var(--bg-primary), transparent);
+}
+
+.marquee-content {
+    display: inline-flex;
+    animation: marquee 25s linear infinite;
+    gap: 60px;
+}
+
+.marquee-logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: -0.03em;
+    filter: grayscale(100%);
+    opacity: 0.5;
+    transition: opacity var(--transition-fast), filter var(--transition-fast);
+}
+
+.marquee-logo:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(-50%, 0, 0);
+    }
+}
+
+/* Category Grid Card Icons */
+.category-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    transition: all var(--transition-base);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-premium);
+    border-color: var(--text-secondary);
+}
+
+.category-card-icon {
+    font-size: 2rem;
+    color: var(--brand-primary);
+    margin-bottom: var(--space-4);
+}
+
+/* Why VertexLearn Highlights cards */
+.why-highlight-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    height: 100%;
+    transition: border-color var(--transition-fast);
+}
+
+.why-highlight-card:hover {
+    border-color: var(--brand-primary);
+}
+
+/* AI Tutor Chat Showcase mockups */
+.chat-window {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+}
+
+.chat-header {
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    padding: var(--space-3) var(--space-4);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chat-body {
+    padding: var(--space-4);
+    height: 380px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    background-color: var(--bg-secondary);
+}
+
+.chat-bubble-mock {
+    max-width: 85%;
+    padding: 10px 14px;
+    border-radius: var(--radius-lg);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    animation: bubbleEntrance 0.3s ease forwards;
+}
+
+.chat-bubble-mock.user {
+    background-color: var(--brand-primary);
+    color: #fff;
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+}
+
+.chat-bubble-mock.ai {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+}
+
+@keyframes bubbleEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Citations inside chatbot mock */
+.chat-citations {
+    margin-top: var(--space-2);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+/* Premium Learning Timeline */
+.timeline-track {
+    position: relative;
+    padding-left: 32px;
+}
+
+@media (min-width: 768px) {
+    .timeline-track {
+        padding-left: 0;
+    }
+    .timeline-track::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 2px;
+        height: 100%;
+        background-color: var(--border-color);
+        transform: translateX(-50%);
+        z-index: 1;
+    }
+}
+
+.timeline-step {
+    position: relative;
+    margin-bottom: var(--space-6);
+}
+
+.timeline-step-icon {
+    position: absolute;
+    left: -32px;
+    top: 4px;
+    width: 24px;
+    height: 24px;
+    background-color: var(--bg-primary);
+    border: 2px solid var(--brand-primary);
+    border-radius: var(--radius-full);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--brand-primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+@media (min-width: 768px) {
+    .timeline-step-icon {
+        left: 50%;
+        transform: translateX(-50%);
+        top: 8px;
+        width: 32px;
+        height: 32px;
+        font-size: 0.875rem;
+    }
+}
+
+/* Pricing Toggle Switch (Stripe style) */
+.pricing-toggle {
+    display: inline-flex;
+    background-color: var(--bg-secondary);
+    padding: 4px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    margin-bottom: var(--space-6);
+}
+
+.pricing-toggle-btn {
+    border: none;
+    background: transparent;
+    padding: 0.5rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    border-radius: var(--radius-full);
+    transition: all var(--transition-fast);
+}
+
+.pricing-toggle-btn.active {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Pricing Card Highlighted (Stripe style shadow) */
+.pricing-card {
+    transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+}
+
+.pricing-card.highlighted {
+    border-color: var(--brand-primary);
+    box-shadow: var(--shadow-premium), 0 0 0 1px var(--brand-primary);
+}
+
+.pricing-card.highlighted::before {
+    content: "Recommended";
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--brand-primary);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Testimonial slider layouts */
+.testimonial-card {
+    border-radius: var(--radius-lg);
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-sm);
+    height: 100%;
+}
+
+.testimonial-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+}
+
+/* Accordion FAQs customization */
+.accordion-item {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-md) !important;
+    margin-bottom: var(--space-3);
+    overflow: hidden;
+}
+
+.accordion-button {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.9375rem;
+    padding: var(--space-4);
+    box-shadow: none !important;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: var(--bg-secondary);
+    color: var(--brand-primary);
+}
+
+.accordion-body {
+    background-color: var(--bg-card);
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    padding: var(--space-4);
+    line-height: 1.6;
+}
+
+/* Custom SVG grid background decor */
+.bg-grid-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.4;
+    pointer-events: none;
+}
+html.dark-theme .bg-grid-svg {
+    opacity: 0.05;
+}
