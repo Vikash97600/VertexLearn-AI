@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Identity - VertexLearn AI</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Core Style System -->
+    <link rel="stylesheet" href="./assets/css/base/variables.css">
+    <link rel="stylesheet" href="./assets/css/base/typography.css">
+    <link rel="stylesheet" href="./assets/css/components/buttons.css">
+    <link rel="stylesheet" href="./assets/css/components/cards.css">
+    <link rel="stylesheet" href="./assets/css/components/forms.css">
+    <link rel="stylesheet" href="./assets/css/components/animations.css">
+    <link rel="stylesheet" href="./assets/css/components/utilities.css">
+    <link rel="stylesheet" href="./assets/css/layout/layout.css">
+    <link rel="stylesheet" href="./assets/css/themes/dark-theme.css">
+    <link rel="stylesheet" href="./assets/css/utilities/responsive.css">
+    
+    <!-- Page Specific Stylesheet -->
+    <link rel="stylesheet" href="./assets/css/pages/otp-verification.css">
+
+    <!-- Inline Head Script to instantly apply theme (Prevents visual flashing) -->
+    <script>
+        (function() {
+            const theme = localStorage.getItem('vertexlearn_theme');
+            if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark-theme');
+            }
+        })();
+    </script>
+</head>
+<body class="bg-primary">
+
+    <div class="auth-layout">
+        <!-- Left Panel: Branding & Graphic mockups -->
+        <div class="auth-banner-panel d-none d-lg-flex">
+            <div>
+                <a href="index.html" class="sidebar-brand text-decoration-none p-0">
+                    <span class="fs-4 fw-bold" style="letter-spacing: -0.03em;">VertexLearn<span class="text-primary">.AI</span></span>
+                </a>
+            </div>
+            
+            <div class="my-auto position-relative py-5">
+                <h2 class="display-5 fw-bold text-dark mb-3" style="letter-spacing: -0.03em;">Learn Smarter with AI</h2>
+                <p class="text-body text-secondary-custom mb-5 max-width-readable" style="max-width: 480px;">
+                    Experience next-generation e-learning. Log note bookmarks, attempt custom quizzes, and get doubts resolved instantly by an embedded context-grounded AI Tutor.
+                </p>
+                
+                <div class="graphic-viewport mt-5">
+                    <!-- Stat Card -->
+                    <div class="card p-3 floating-graphic-card fg-card-1 bg-card border shadow-lg" style="width: 230px;">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="status-indicator status-online"></span>
+                            <span class="text-xs fw-semibold text-dark">AI Tutor Scoped Chat</span>
+                        </div>
+                        <p class="text-xs text-secondary-custom mt-2 mb-0">"BST traversals visit nodes in sorted order..."</p>
+                    </div>
+                    
+                    <!-- Progress Card -->
+                    <div class="card p-3 floating-graphic-card fg-card-2 bg-card border shadow-lg" style="width: 190px;">
+                        <small class="text-xs text-secondary d-block">Course Progress</small>
+                        <strong class="text-xs text-dark d-block mt-1">Data Structures</strong>
+                        <div class="progress mt-2" style="height: 6px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 68%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Certificate Card -->
+                    <div class="card p-3 floating-graphic-card fg-card-3 bg-card border shadow-lg" style="width: 210px;">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-patch-check-fill text-success fs-3"></i>
+                            <div>
+                                <div class="fw-semibold text-xs text-dark mb-0">Certificate Issued</div>
+                                <small class="text-xs text-secondary-custom">Machine Learning Basic</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-xs text-muted-custom">
+                &copy; 2026 Vertexon Learning Technologies Pvt. Ltd. All rights reserved.
+            </div>
+        </div>
+
+        <!-- Right Panel: Authentication Form -->
+        <div class="auth-form-panel">
+            <div class="auth-form-container" data-aos="fade-up">
+                <!-- Mobile Navigation Branding -->
+                <div class="d-block d-lg-none text-center mb-5">
+                    <a href="index.html" class="sidebar-brand text-decoration-none d-inline-flex">
+                        <span class="fs-4 fw-bold" style="letter-spacing: -0.03em;">VertexLearn<span class="text-primary">.AI</span></span>
+                    </a>
+                </div>
+
+                <div class="mb-5 text-center text-lg-start animate-fade-in-up">
+                    <h1 class="h3 fw-bold mb-2">Verify Your Identity</h1>
+                    <p class="text-small text-secondary-custom">
+                        We have sent a six-digit verification code to <strong id="maskedEmailText" class="text-dark">your email</strong>.
+                    </p>
+                </div>
+
+                <!-- Alert error banner -->
+                <div class="alert alert-danger d-none animate-shake" id="otpAlert" role="alert">
+                    <i class="bi bi-exclamation-circle-fill me-2"></i>
+                    <span id="otpAlertMsg">Invalid verification code. Please try again.</span>
+                </div>
+
+                <form id="otpForm" novalidate>
+                    <!-- Six OTP Input Fields -->
+                    <div class="otp-inputs-wrapper d-flex justify-content-between gap-2 mb-4">
+                        <input type="text" maxlength="1" class="form-control otp-box" aria-label="Digit 1" pattern="[0-9]*" inputmode="numeric" required autofocus>
+                        <input type="text" maxlength="1" class="form-control otp-box" aria-label="Digit 2" pattern="[0-9]*" inputmode="numeric" required>
+                        <input type="text" maxlength="1" class="form-control otp-box" aria-label="Digit 3" pattern="[0-9]*" inputmode="numeric" required>
+                        <input type="text" maxlength="1" class="form-control otp-box" aria-label="Digit 4" pattern="[0-9]*" inputmode="numeric" required>
+                        <input type="text" maxlength="1" class="form-control otp-box" aria-label="Digit 5" pattern="[0-9]*" inputmode="numeric" required>
+                        <input type="text" maxlength="1" class="form-control otp-box" aria-label="Digit 6" pattern="[0-9]*" inputmode="numeric" required>
+                    </div>
+
+                    <!-- OTP Timer and Resend Actions -->
+                    <div class="d-flex justify-content-between align-items-center mb-4 text-xs">
+                        <span class="text-secondary-custom" id="timerLabel">Code expires in: <strong id="countdownTimer" class="text-dark">02:00</strong></span>
+                        <button type="button" class="btn btn-link text-decoration-none p-0 fw-semibold text-primary" id="resendOtpBtn" disabled>
+                            Resend Code
+                        </button>
+                    </div>
+
+                    <!-- Attempts warnings -->
+                    <div id="resendAttemptLabel" class="text-xs text-secondary-custom mb-4 text-end d-none">
+                        Resend attempts remaining: <span class="fw-semibold text-dark" id="attemptsRemainingCount">3</span>
+                    </div>
+
+                    <!-- Verify Button -->
+                    <button type="submit" id="submitBtn" class="btn btn-primary btn-lg w-100 mb-4" disabled>
+                        Verify & Continue
+                    </button>
+
+                    <!-- Back to Forgot Password -->
+                    <div class="text-center">
+                        <a href="forgot-password.html" class="btn btn-secondary-custom w-100 py-2 text-small d-flex align-items-center justify-content-center gap-2">
+                            <i class="bi bi-arrow-left"></i> Change Email Address
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Page Specific Script Module -->
+    <script type="module" src="./assets/js/pages/otp-verification.js"></script>
+</body>
+</html>
