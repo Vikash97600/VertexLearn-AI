@@ -10,7 +10,7 @@
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     
-    <!-- Custom Style Sheet Foundation -->
+    <!-- Core Style System -->
     <link rel="stylesheet" href="./assets/css/base/variables.css">
     <link rel="stylesheet" href="./assets/css/base/typography.css">
     <link rel="stylesheet" href="./assets/css/components/buttons.css">
@@ -21,7 +21,11 @@
     <link rel="stylesheet" href="./assets/css/layout/layout.css">
     <link rel="stylesheet" href="./assets/css/themes/dark-theme.css">
     <link rel="stylesheet" href="./assets/css/utilities/responsive.css">
+    
+    <!-- Page Specific Stylesheet -->
+    <link rel="stylesheet" href="./assets/css/pages/login.css">
 
+    <!-- Inline Head Script to instantly apply theme (Prevents visual flashing) -->
     <script>
         (function() {
             const theme = localStorage.getItem('vertexlearn_theme');
@@ -34,180 +38,164 @@
 <body class="bg-primary">
 
     <div class="auth-layout">
-        <!-- Banner Side Panel (Sticky on large screens) -->
-        <div class="auth-banner-panel desktop-only">
+        <!-- Left Panel: Branding & Custom SVG Illustration -->
+        <div class="auth-banner-panel d-none d-lg-flex">
             <div>
                 <a href="index.html" class="sidebar-brand text-decoration-none p-0">
                     <span class="fs-4 fw-bold" style="letter-spacing: -0.03em;">VertexLearn<span class="text-primary">.AI</span></span>
                 </a>
             </div>
             
-            <div class="my-auto">
-                <blockquote class="fs-4 fw-medium text-primary mb-4" style="line-height: 1.4; letter-spacing: -0.02em;">
-                    "The RAG AI tutor answers doubt resolutions immediately. It significantly reduced my study bottlenecks during final year exams."
-                </blockquote>
-                <div class="d-flex align-items-center gap-3">
-                    <div class="avatar avatar-lg bg-secondary border">
-                        <i class="bi bi-person fs-3 d-flex align-items-center justify-content-center h-100 text-secondary"></i>
+            <!-- Graphic Illustration and Cards -->
+            <div class="my-auto position-relative py-5">
+                <h2 class="display-5 fw-bold text-dark mb-3" style="letter-spacing: -0.03em;">Learn Smarter with AI</h2>
+                <p class="text-body text-secondary-custom mb-5 max-width-readable" style="max-width: 480px;">
+                    Experience next-generation e-learning. Log note bookmarks, attempt custom quizzes, and get doubts resolved instantly by an embedded context-grounded AI Tutor.
+                </p>
+                
+                <!-- Floating Graphic Container -->
+                <div class="graphic-viewport mt-5">
+                    <!-- Stat Card -->
+                    <div class="card p-3 floating-graphic-card fg-card-1 bg-card border shadow-lg" style="width: 230px;">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="status-indicator status-online"></span>
+                            <span class="text-xs fw-semibold text-dark">AI Tutor Scoped Chat</span>
+                        </div>
+                        <p class="text-xs text-secondary-custom mt-2 mb-0">"BST traversals visit nodes in sorted order..."</p>
                     </div>
-                    <div>
-                        <div class="fw-semibold text-primary text-small">Ananya Sharma</div>
-                        <div class="text-xs text-secondary-custom">Final Year B.Tech Student</div>
+                    
+                    <!-- Progress Card -->
+                    <div class="card p-3 floating-graphic-card fg-card-2 bg-card border shadow-lg" style="width: 190px;">
+                        <small class="text-xs text-secondary d-block">Course Progress</small>
+                        <strong class="text-xs text-dark d-block mt-1">Data Structures</strong>
+                        <div class="progress mt-2" style="height: 6px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 68%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Certificate Badge Card -->
+                    <div class="card p-3 floating-graphic-card fg-card-3 bg-card border shadow-lg" style="width: 210px;">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-patch-check-fill text-success fs-3"></i>
+                            <div>
+                                <div class="fw-semibold text-xs text-dark mb-0">Certificate Issued</div>
+                                <small class="text-xs text-secondary-custom">Machine Learning Basic</small>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             
             <div class="text-xs text-muted-custom">
-                &copy; 2026 Vertexon Learning Technologies Pvt. Ltd.
+                &copy; 2026 Vertexon Learning Technologies Pvt. Ltd. All rights reserved.
             </div>
         </div>
 
-        <!-- Form Side Panel -->
+        <!-- Right Panel: Authentication Card Form -->
         <div class="auth-form-panel">
-            <div class="auth-form-container">
+            <div class="auth-form-container" data-aos="fade-up">
                 <!-- Mobile Navigation Branding -->
-                <div class="mobile-only text-center mb-5">
+                <div class="d-block d-lg-none text-center mb-5">
                     <a href="index.html" class="sidebar-brand text-decoration-none d-inline-flex">
                         <span class="fs-4 fw-bold" style="letter-spacing: -0.03em;">VertexLearn<span class="text-primary">.AI</span></span>
                     </a>
                 </div>
 
-                <div class="mb-5">
-                    <h2 class="h3 fw-bold mb-2">Welcome Back</h2>
-                    <p class="text-small">Enter your credentials to access your workspace dashboard.</p>
+                <div class="mb-5 text-center text-lg-start">
+                    <h1 class="h3 fw-bold mb-2">Welcome Back</h1>
+                    <p class="text-small text-secondary-custom">Sign in to resume your learning roadmap.</p>
                 </div>
 
-                <form id="loginForm" novalidate>
-                    <!-- Email field -->
+                <!-- Alert error banner -->
+                <div class="alert alert-danger d-none" id="loginAlert" role="alert">
+                    <i class="bi bi-exclamation-circle-fill me-2"></i>
+                    <span id="loginAlertMsg">Invalid credentials. Please try again.</span>
+                </div>
+
+                <form id="loginForm" novalidate autocomplete="on">
+                    <!-- Email with Input icon -->
                     <div class="mb-4">
                         <label for="emailInput" class="form-label">Email Address</label>
-                        <input type="email" id="emailInput" class="form-control" placeholder="name@example.com" required>
-                        <div class="invalid-feedback" id="emailError">Please enter a valid email address.</div>
+                        <div class="input-icon-wrapper">
+                            <i class="bi bi-envelope input-icon-left"></i>
+                            <input type="email" id="emailInput" class="form-control input-with-icon" placeholder="name@example.com" required autocomplete="email">
+                            <div class="invalid-feedback text-xs" id="emailError">Please enter a valid email address.</div>
+                        </div>
                     </div>
 
-                    <!-- Password field -->
+                    <!-- Password with Input icon and Toggle Button -->
                     <div class="mb-4">
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <label for="passwordInput" class="form-label mb-0">Password</label>
-                            <a href="#" class="text-xs text-primary">Forgot Password?</a>
+                            <a href="#" class="text-xs text-primary text-decoration-none">Forgot Password?</a>
                         </div>
-                        <input type="password" id="passwordInput" class="form-control" placeholder="••••••••" required>
-                        <div class="invalid-feedback" id="passwordError">Password is required.</div>
+                        <div class="input-icon-wrapper">
+                            <i class="bi bi-lock input-icon-left"></i>
+                            <input type="password" id="passwordInput" class="form-control input-with-icon" placeholder="••••••••" required autocomplete="current-password">
+                            <button type="button" class="btn btn-icon-toggle" id="passwordToggleBtn" aria-label="Toggle Password Visibility">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            <div class="invalid-feedback text-xs" id="passwordError">Password is required.</div>
+                        </div>
                     </div>
 
-                    <!-- Remember Me / Role selection helper for testing -->
-                    <div class="mb-4 d-flex justify-content-between align-items-center">
+                    <!-- Remember Me checkbox -->
+                    <div class="mb-4">
                         <div class="form-check">
                             <input type="checkbox" id="rememberMeInput" class="form-check-input">
-                            <label for="rememberMeInput" class="form-check-label">Remember Me</label>
+                            <label for="rememberMeInput" class="form-check-label text-xs">Remember Me</label>
                         </div>
                     </div>
 
-                    <!-- Sandbox demo shortcut selectors (Makes foundation interaction amazing!) -->
-                    <div class="card p-3 mb-4 bg-secondary">
-                        <label for="demoRoleSelect" class="form-label text-xs fw-semibold text-primary uppercase">Sandbox Demo Login Profile</label>
-                        <select class="form-select" id="demoRoleSelect">
-                            <option value="student">Ananya Sharma (Student Profile)</option>
-                            <option value="instructor">Rohit Sen (Instructor Profile)</option>
+                    <!-- Sandbox demo shortcut selectors -->
+                    <div class="card p-3 mb-4 bg-secondary border shadow-sm rounded-3">
+                        <label for="demoRoleSelect" class="form-label text-xs fw-semibold text-primary text-uppercase mb-2">Sandbox Demo Profile</label>
+                        <select class="form-select text-small" id="demoRoleSelect">
+                            <option value="student">Ananya Sharma (Student Workspace)</option>
+                            <option value="instructor">Rohit Sen (Instructor Workspace)</option>
                             <option value="admin">Meera Nair (Platform Administrator)</option>
                         </select>
-                        <span class="form-text text-xs">Simulates login values directly into LocalStorage to review role layouts.</span>
+                        <span class="form-text text-xs mt-2 d-block">Pre-authenticates values into local storage to test workspace routing.</span>
                     </div>
 
                     <!-- Login Submit -->
-                    <button type="submit" id="submitBtn" class="btn btn-primary btn-lg w-100 mb-4">
+                    <button type="submit" id="submitBtn" class="btn btn-primary btn-lg w-100 mb-4" disabled>
                         Sign In
                     </button>
 
-                    <p class="text-center text-small">
-                        Don't have an account? <a href="register.html" class="fw-semibold">Sign Up</a>
+                    <!-- OR Divider -->
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <hr class="flex-grow-1 border-color">
+                        <span class="text-xs text-muted-custom text-uppercase fw-semibold" style="letter-spacing: 0.05em;">OR</span>
+                        <hr class="flex-grow-1 border-color">
+                    </div>
+
+                    <!-- Social Login Buttons -->
+                    <div class="row g-2 mb-4">
+                        <div class="col-6">
+                            <button type="button" class="btn btn-secondary-custom w-100 text-xs py-2 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-google text-danger"></i> Google
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button type="button" class="btn btn-secondary-custom w-100 text-xs py-2 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-microsoft text-primary"></i> Microsoft
+                            </button>
+                        </div>
+                    </div>
+
+                    <p class="text-center text-small text-secondary-custom mb-0">
+                        Don't have an account? <a href="register.html" class="fw-semibold text-primary text-decoration-none">Create Account</a>
                     </p>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Toast notifier element placeholder -->
-    <script type="module">
-        import { ThemeManager } from './assets/js/components/theme.js';
-        import { Validator } from './assets/js/utils/validator.js';
-        import { Toast } from './assets/js/components/toast.js';
-        import { Loader } from './assets/js/components/loader.js';
-        import { Storage } from './assets/js/config/storage.js';
-        import { STORAGE_KEYS, ROUTES } from './assets/js/config/constants.js';
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-        // Load Theme System
-        ThemeManager.init();
-
-        const form = document.getElementById('loginForm');
-        const emailInput = document.getElementById('emailInput');
-        const passwordInput = document.getElementById('passwordInput');
-        const demoRoleSelect = document.getElementById('demoRoleSelect');
-        const submitBtn = document.getElementById('submitBtn');
-
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            // Clear invalid states
-            emailInput.classList.remove('is-invalid');
-            passwordInput.classList.remove('is-invalid');
-
-            // Perform client-side validation using modules
-            const emailValidation = Validator.validateEmail(emailInput.value);
-            const passwordValidation = Validator.validateRequired(passwordInput.value, 'Password');
-
-            let hasErrors = false;
-
-            if (!emailValidation.isValid) {
-                emailInput.classList.add('is-invalid');
-                document.getElementById('emailError').textContent = emailValidation.errorMsg;
-                hasErrors = true;
-            }
-
-            if (!passwordValidation.isValid) {
-                passwordInput.classList.add('is-invalid');
-                document.getElementById('passwordError').textContent = passwordValidation.errorMsg;
-                hasErrors = true;
-            }
-
-            if (hasErrors) {
-                Toast.error('Please resolve the errors before signing in.');
-                return;
-            }
-
-            // Simulate loading state
-            Loader.setButtonLoading(submitBtn, true);
-
-            setTimeout(() => {
-                Loader.setButtonLoading(submitBtn, false);
-
-                // Fetch select role details
-                const selectedRole = demoRoleSelect.value;
-                let fullName = 'Ananya Sharma';
-                if (selectedRole === 'instructor') fullName = 'Rohit Sen';
-                if (selectedRole === 'admin') fullName = 'Meera Nair';
-
-                // Save dummy JWT tokens & profile to storage for client routing Guard checks
-                Storage.set(STORAGE_KEYS.ACCESS_TOKEN, `mock_jwt_access_token_${selectedRole}`);
-                Storage.set(STORAGE_KEYS.REFRESH_TOKEN, `mock_jwt_refresh_token_${selectedRole}`);
-                Storage.set(STORAGE_KEYS.USER_INFO, {
-                    id: 'mock-user-uuid',
-                    full_name: fullName,
-                    email: emailInput.value || `${selectedRole}@vertexlearn.ai`,
-                    role: selectedRole
-                });
-
-                Toast.success(`Welcome back, ${fullName}! Launching dashboard...`);
-
-                // Navigate to layout route matching role selection
-                setTimeout(() => {
-                    if (selectedRole === 'student') window.location.href = ROUTES.STUDENT_DASHBOARD;
-                    if (selectedRole === 'instructor') window.location.href = ROUTES.INSTRUCTOR_DASHBOARD;
-                    if (selectedRole === 'admin') window.location.href = ROUTES.ADMIN_DASHBOARD;
-                }, 1000);
-
-            }, 1200);
-        });
-    </script>
+    <!-- Page Specific Script Module -->
+    <script type="module" src="./assets/js/pages/login.js"></script>
 </body>
 </html>

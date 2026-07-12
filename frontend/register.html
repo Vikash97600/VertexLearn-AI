@@ -10,7 +10,7 @@
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     
-    <!-- Custom Style Sheet Foundation -->
+    <!-- Core Style System -->
     <link rel="stylesheet" href="./assets/css/base/variables.css">
     <link rel="stylesheet" href="./assets/css/base/typography.css">
     <link rel="stylesheet" href="./assets/css/components/buttons.css">
@@ -21,7 +21,11 @@
     <link rel="stylesheet" href="./assets/css/layout/layout.css">
     <link rel="stylesheet" href="./assets/css/themes/dark-theme.css">
     <link rel="stylesheet" href="./assets/css/utilities/responsive.css">
+    
+    <!-- Page Specific Stylesheet -->
+    <link rel="stylesheet" href="./assets/css/pages/register.css">
 
+    <!-- Inline Head Script to instantly apply theme (Prevents visual flashing) -->
     <script>
         (function() {
             const theme = localStorage.getItem('vertexlearn_theme');
@@ -34,191 +38,221 @@
 <body class="bg-primary">
 
     <div class="auth-layout">
-        <!-- Banner Side Panel (Sticky on large screens) -->
-        <div class="auth-banner-panel desktop-only">
+        <!-- Left Panel: Branding & Graphic mockups -->
+        <div class="auth-banner-panel d-none d-lg-flex">
             <div>
                 <a href="index.html" class="sidebar-brand text-decoration-none p-0">
                     <span class="fs-4 fw-bold" style="letter-spacing: -0.03em;">VertexLearn<span class="text-primary">.AI</span></span>
                 </a>
             </div>
             
-            <div class="my-auto">
-                <blockquote class="fs-4 fw-medium text-primary mb-4" style="line-height: 1.4; letter-spacing: -0.02em;">
-                    "We upload pre-recorded content, chunk it, and the FastAPI RAG service automatically parses chunks into pgvector, saving hours of manual setup."
-                </blockquote>
-                <div class="d-flex align-items-center gap-3">
-                    <div class="avatar avatar-lg bg-secondary border">
-                        <i class="bi bi-person fs-3 d-flex align-items-center justify-content-center h-100 text-secondary"></i>
+            <div class="my-auto position-relative py-5">
+                <h2 class="display-5 fw-bold text-dark mb-3" style="letter-spacing: -0.03em;">Learn Smarter with AI</h2>
+                <p class="text-body text-secondary-custom mb-5 max-width-readable" style="max-width: 480px;">
+                    Experience next-generation e-learning. Log note bookmarks, attempt custom quizzes, and get doubts resolved instantly by an embedded context-grounded AI Tutor.
+                </p>
+                
+                <div class="graphic-viewport mt-5">
+                    <!-- Stat Card -->
+                    <div class="card p-3 floating-graphic-card fg-card-1 bg-card border shadow-lg" style="width: 230px;">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="status-indicator status-online"></span>
+                            <span class="text-xs fw-semibold text-dark">AI Tutor Scoped Chat</span>
+                        </div>
+                        <p class="text-xs text-secondary-custom mt-2 mb-0">"BST traversals visit nodes in sorted order..."</p>
                     </div>
-                    <div>
-                        <div class="fw-semibold text-primary text-small">Rohit Sen</div>
-                        <div class="text-xs text-secondary-custom">Data Structures Instructor</div>
+                    
+                    <!-- Progress Card -->
+                    <div class="card p-3 floating-graphic-card fg-card-2 bg-card border shadow-lg" style="width: 190px;">
+                        <small class="text-xs text-secondary d-block">Course Progress</small>
+                        <strong class="text-xs text-dark d-block mt-1">Data Structures</strong>
+                        <div class="progress mt-2" style="height: 6px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 68%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Certificate Card -->
+                    <div class="card p-3 floating-graphic-card fg-card-3 bg-card border shadow-lg" style="width: 210px;">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-patch-check-fill text-success fs-3"></i>
+                            <div>
+                                <div class="fw-semibold text-xs text-dark mb-0">Certificate Issued</div>
+                                <small class="text-xs text-secondary-custom">Machine Learning Basic</small>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             
             <div class="text-xs text-muted-custom">
-                &copy; 2026 Vertexon Learning Technologies Pvt. Ltd.
+                &copy; 2026 Vertexon Learning Technologies Pvt. Ltd. All rights reserved.
             </div>
         </div>
 
-        <!-- Form Side Panel -->
+        <!-- Right Panel: Authentication Form -->
         <div class="auth-form-panel">
-            <div class="auth-form-container">
+            <div class="auth-form-container py-5" data-aos="fade-up">
                 <!-- Mobile Navigation Branding -->
-                <div class="mobile-only text-center mb-4">
+                <div class="d-block d-lg-none text-center mb-4">
                     <a href="index.html" class="sidebar-brand text-decoration-none d-inline-flex">
                         <span class="fs-4 fw-bold" style="letter-spacing: -0.03em;">VertexLearn<span class="text-primary">.AI</span></span>
                     </a>
                 </div>
 
-                <div class="mb-4">
-                    <h2 class="h3 fw-bold mb-2">Create Account</h2>
-                    <p class="text-small">Get started with VertexLearn AI as a learner today.</p>
+                <div class="mb-4 text-center text-lg-start">
+                    <h1 class="h3 fw-bold mb-1">Create Account</h1>
+                    <p class="text-small text-secondary-custom">Get started with VertexLearn AI today.</p>
                 </div>
 
-                <form id="registerForm" novalidate>
-                    <!-- Full Name field -->
+                <!-- Alert error banner -->
+                <div class="alert alert-danger d-none" id="registerAlert" role="alert">
+                    <i class="bi bi-exclamation-circle-fill me-2"></i>
+                    <span id="registerAlertMsg">Failed to register. Please try again.</span>
+                </div>
+
+                <form id="registerForm" novalidate autocomplete="on">
+                    <!-- Full Name -->
                     <div class="mb-3">
                         <label for="nameInput" class="form-label">Full Name</label>
-                        <input type="text" id="nameInput" class="form-control" placeholder="Ananya Sharma" required>
-                        <div class="invalid-feedback" id="nameError">Full name is required.</div>
+                        <div class="input-icon-wrapper">
+                            <i class="bi bi-person input-icon-left"></i>
+                            <input type="text" id="nameInput" class="form-control input-with-icon" placeholder="Ananya Sharma" required autocomplete="name">
+                            <div class="invalid-feedback text-xs" id="nameError">Full name is required.</div>
+                        </div>
                     </div>
 
-                    <!-- Email field -->
+                    <!-- Email Address -->
                     <div class="mb-3">
                         <label for="emailInput" class="form-label">Email Address</label>
-                        <input type="email" id="emailInput" class="form-control" placeholder="name@example.com" required>
-                        <div class="invalid-feedback" id="emailError">Please enter a valid email address.</div>
+                        <div class="input-icon-wrapper">
+                            <i class="bi bi-envelope input-icon-left"></i>
+                            <input type="email" id="emailInput" class="form-control input-with-icon" placeholder="name@example.com" required autocomplete="email">
+                            <div class="invalid-feedback text-xs" id="emailError">Please enter a valid email address.</div>
+                        </div>
                     </div>
 
-                    <!-- Phone field -->
+                    <!-- Phone Number -->
                     <div class="mb-3">
                         <label for="phoneInput" class="form-label">Phone Number (Optional)</label>
-                        <input type="tel" id="phoneInput" class="form-control" placeholder="+91 98765 43210">
-                        <div class="invalid-feedback" id="phoneError">Please enter a valid phone number.</div>
+                        <div class="input-icon-wrapper">
+                            <i class="bi bi-phone input-icon-left"></i>
+                            <input type="tel" id="phoneInput" class="form-control input-with-icon" placeholder="+91 98765 43210">
+                            <div class="invalid-feedback text-xs" id="phoneError">Please enter a valid phone number.</div>
+                        </div>
                     </div>
 
-                    <!-- Password field -->
+                    <!-- Password -->
                     <div class="mb-3">
                         <label for="passwordInput" class="form-label">Password</label>
-                        <input type="password" id="passwordInput" class="form-control" placeholder="••••••••" required>
-                        <div class="form-text text-xs">At least 8 characters with upper, lower, numbers, and symbols.</div>
-                        <div class="invalid-feedback" id="passwordError">Password must meet requirements.</div>
+                        <div class="input-icon-wrapper">
+                            <i class="bi bi-lock input-icon-left"></i>
+                            <input type="password" id="passwordInput" class="form-control input-with-icon" placeholder="••••••••" required autocomplete="new-password">
+                            <button type="button" class="btn btn-icon-toggle" id="passwordToggleBtn" aria-label="Toggle Password Visibility">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            <div class="invalid-feedback text-xs" id="passwordError">Password must meet all requirements.</div>
+                        </div>
+                        
+                        <!-- Live Password Strength Meter -->
+                        <div class="mt-2">
+                            <div class="progress" style="height: 5px; background-color: var(--border-color);">
+                                <div class="progress-bar" id="strengthProgressBar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-1">
+                                <span class="text-xs text-secondary-custom">Password Strength: <strong id="strengthLabel" class="text-danger">Too Short</strong></span>
+                            </div>
+                        </div>
+                        
+                        <!-- Requirements Checklist -->
+                        <ul class="list-unstyled mt-2 ps-1 d-flex flex-column gap-1" style="font-size: 11px;">
+                            <li id="reqLength" class="text-secondary-custom"><i class="bi bi-circle me-1"></i> At least 8 characters</li>
+                            <li id="reqUpper" class="text-secondary-custom"><i class="bi bi-circle me-1"></i> One uppercase letter</li>
+                            <li id="reqLower" class="text-secondary-custom"><i class="bi bi-circle me-1"></i> One lowercase letter</li>
+                            <li id="reqDigit" class="text-secondary-custom"><i class="bi bi-circle me-1"></i> One number</li>
+                            <li id="reqSpecial" class="text-secondary-custom"><i class="bi bi-circle me-1"></i> One special character</li>
+                        </ul>
                     </div>
 
-                    <!-- Confirm Password field -->
-                    <div class="mb-4">
+                    <!-- Confirm Password -->
+                    <div class="mb-3">
                         <label for="confirmPasswordInput" class="form-label">Confirm Password</label>
-                        <input type="password" id="confirmPasswordInput" class="form-control" placeholder="••••••••" required>
-                        <div class="invalid-feedback" id="confirmPasswordError">Passwords do not match.</div>
+                        <div class="input-icon-wrapper">
+                            <i class="bi bi-lock input-icon-left"></i>
+                            <input type="password" id="confirmPasswordInput" class="form-control input-with-icon" placeholder="••••••••" required autocomplete="new-password">
+                            <button type="button" class="btn btn-icon-toggle" id="confirmPasswordToggleBtn" aria-label="Toggle Password Visibility">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            <div class="invalid-feedback text-xs" id="confirmPasswordError">Passwords do not match.</div>
+                        </div>
                     </div>
 
-                    <!-- Register Submit -->
-                    <button type="submit" id="submitBtn" class="btn btn-primary btn-lg w-100 mb-4">
+                    <!-- Agree to Terms checkbox -->
+                    <div class="mb-4">
+                        <div class="form-check">
+                            <input type="checkbox" id="termsInput" class="form-check-input" required>
+                            <label for="termsInput" class="form-check-label text-xs">
+                                I agree to the <a href="#" class="text-primary text-decoration-none">Terms of Service</a> and <a href="#" class="text-primary text-decoration-none">Privacy Policy</a>
+                            </label>
+                            <div class="invalid-feedback text-xs" id="termsError">You must agree to the terms.</div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Registration -->
+                    <button type="submit" id="submitBtn" class="btn btn-primary btn-lg w-100 mb-4" disabled>
                         Create Account
                     </button>
 
-                    <p class="text-center text-small">
-                        Already have an account? <a href="login.html" class="fw-semibold">Sign In</a>
+                    <!-- OR Divider -->
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <hr class="flex-grow-1 border-color">
+                        <span class="text-xs text-muted-custom text-uppercase fw-semibold" style="letter-spacing: 0.05em;">OR</span>
+                        <hr class="flex-grow-1 border-color">
+                    </div>
+
+                    <!-- Social Login Buttons -->
+                    <div class="row g-2 mb-4">
+                        <div class="col-6">
+                            <button type="button" class="btn btn-secondary-custom w-100 text-xs py-2 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-google text-danger"></i> Google
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button type="button" class="btn btn-secondary-custom w-100 text-xs py-2 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-microsoft text-primary"></i> Microsoft
+                            </button>
+                        </div>
+                    </div>
+
+                    <p class="text-center text-small text-secondary-custom mb-0">
+                        Already have an account? <a href="login.html" class="fw-semibold text-primary text-decoration-none">Sign In</a>
                     </p>
                 </form>
             </div>
         </div>
     </div>
 
-    <script type="module">
-        import { ThemeManager } from './assets/js/components/theme.js';
-        import { Validator } from './assets/js/utils/validator.js';
-        import { Toast } from './assets/js/components/toast.js';
-        import { Loader } from './assets/js/components/loader.js';
-        import { Storage } from './assets/js/config/storage.js';
-        import { STORAGE_KEYS, ROUTES } from './assets/js/config/constants.js';
+    <!-- Registration Success Bootstrap Modal -->
+    <div class="modal fade" id="registerSuccessModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: var(--radius-lg);">
+                <div class="modal-body text-center p-5">
+                    <div class="avatar-lg bg-success-light text-success d-flex align-items-center justify-content-center mx-auto mb-4 rounded-circle" style="width: 72px; height: 72px;">
+                        <i class="bi bi-check2 fs-1"></i>
+                    </div>
+                    <h3 class="h4 fw-bold mb-3">Registration Successful!</h3>
+                    <p class="text-secondary-custom text-small mb-4">
+                        Your account has been created. Click below to sign in and access your student workspace dashboard.
+                    </p>
+                    <a href="login.html" class="btn btn-primary btn-lg w-100">Proceed to Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        // Load Theme System
-        ThemeManager.init();
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-        const form = document.getElementById('registerForm');
-        const nameInput = document.getElementById('nameInput');
-        const emailInput = document.getElementById('emailInput');
-        const phoneInput = document.getElementById('phoneInput');
-        const passwordInput = document.getElementById('passwordInput');
-        const confirmPasswordInput = document.getElementById('confirmPasswordInput');
-        const submitBtn = document.getElementById('submitBtn');
-
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            // Clear invalid states
-            [nameInput, emailInput, phoneInput, passwordInput, confirmPasswordInput].forEach(inp => {
-                inp.classList.remove('is-invalid');
-            });
-
-            // Perform client-side validation
-            const nameValidation = Validator.validateRequired(nameInput.value, 'Full name');
-            const emailValidation = Validator.validateEmail(emailInput.value);
-            const phoneValidation = Validator.validatePhone(phoneInput.value);
-            const passwordValidation = Validator.validatePassword(passwordInput.value);
-            
-            let hasErrors = false;
-
-            if (!nameValidation.isValid) {
-                nameInput.classList.add('is-invalid');
-                document.getElementById('nameError').textContent = nameValidation.errorMsg;
-                hasErrors = true;
-            }
-
-            if (!emailValidation.isValid) {
-                emailInput.classList.add('is-invalid');
-                document.getElementById('emailError').textContent = emailValidation.errorMsg;
-                hasErrors = true;
-            }
-
-            if (!phoneValidation.isValid) {
-                phoneInput.classList.add('is-invalid');
-                document.getElementById('phoneError').textContent = phoneValidation.errorMsg;
-                hasErrors = true;
-            }
-
-            if (!passwordValidation.isValid) {
-                passwordInput.classList.add('is-invalid');
-                document.getElementById('passwordError').textContent = passwordValidation.errorMsg;
-                hasErrors = true;
-            } else if (passwordInput.value !== confirmPasswordInput.value) {
-                confirmPasswordInput.classList.add('is-invalid');
-                document.getElementById('confirmPasswordError').textContent = 'Passwords do not match.';
-                hasErrors = true;
-            }
-
-            if (hasErrors) {
-                Toast.error('Please resolve validation errors before registering.');
-                return;
-            }
-
-            // Simulate loading state
-            Loader.setButtonLoading(submitBtn, true);
-
-            setTimeout(() => {
-                Loader.setButtonLoading(submitBtn, false);
-
-                // Save simulated student JWT token
-                Storage.set(STORAGE_KEYS.ACCESS_TOKEN, 'mock_jwt_access_token_student');
-                Storage.set(STORAGE_KEYS.REFRESH_TOKEN, 'mock_jwt_refresh_token_student');
-                Storage.set(STORAGE_KEYS.USER_INFO, {
-                    id: 'mock-user-uuid',
-                    full_name: nameInput.value,
-                    email: emailInput.value,
-                    role: 'student'
-                });
-
-                Toast.success('Account created successfully! Loading your dashboard...');
-
-                setTimeout(() => {
-                    window.location.href = ROUTES.STUDENT_DASHBOARD;
-                }, 1000);
-
-            }, 1500);
-        });
-    </script>
+    <!-- Page Specific Script Module -->
+    <script type="module" src="./assets/js/pages/register.js"></script>
 </body>
 </html>

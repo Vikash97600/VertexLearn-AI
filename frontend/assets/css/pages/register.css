@@ -1,0 +1,54 @@
+/* register.css - Registration-specific styles and Password Strength Meter */
+
+/* Import shared auth layout from login.css to prevent duplicates */
+@import url('./login.css');
+
+/* Password Strength Meter Colors */
+.strength-weak {
+    background-color: var(--brand-danger) !important;
+}
+
+.strength-fair {
+    background-color: #f97316 !important; /* Orange */
+}
+
+.strength-good {
+    background-color: #f59e0b !important; /* Amber */
+}
+
+.strength-strong {
+    background-color: var(--brand-primary) !important;
+}
+
+.strength-very-strong {
+    background-color: var(--brand-success) !important;
+}
+
+/* Requirements Check Indicators */
+.req-met {
+    color: var(--brand-success) !important;
+    font-weight: 500;
+}
+
+.req-met i {
+    color: var(--brand-success) !important;
+}
+
+.req-met i::before {
+    content: "\f272"; /* bi-check-circle-fill */
+}
+
+/* Form check input overrides */
+.form-check-input.is-invalid {
+    border-color: var(--brand-danger);
+}
+
+.form-check-input.is-invalid ~ .form-check-label {
+    color: var(--brand-danger);
+}
+
+/* Form success modal styling */
+.modal-content {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+}

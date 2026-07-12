@@ -1,0 +1,145 @@
+/* login.css - Login Layout, Input Icons, and Focus Actions */
+
+.auth-banner-panel {
+    background-color: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    padding: var(--space-8);
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.auth-form-panel {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-6) var(--space-5);
+    background-color: var(--bg-primary);
+}
+
+.auth-form-container {
+    width: 100%;
+    max-width: 450px;
+}
+
+/* Floating Graphic Layout */
+.graphic-viewport {
+    height: 250px;
+    position: relative;
+    width: 100%;
+    margin-top: var(--space-6);
+}
+
+.floating-graphic-card {
+    position: absolute;
+    z-index: 5;
+    animation: authCardFloat 5s ease-in-out infinite;
+}
+
+.fg-card-1 {
+    top: 10%;
+    left: 5%;
+    animation-delay: 0s;
+}
+
+.fg-card-2 {
+    bottom: 10%;
+    right: 5%;
+    animation-delay: 1.5s;
+}
+
+.fg-card-3 {
+    top: 45%;
+    left: 35%;
+    animation-delay: 3s;
+}
+
+@keyframes authCardFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+/* Custom Input Icons Wrapper */
+.input-icon-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.input-icon-left {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    pointer-events: none;
+    z-index: 10;
+    transition: color 0.2s ease;
+}
+
+.input-with-icon {
+    padding-left: 42px !important;
+}
+
+/* If password toggle is present, add right-padding */
+.input-with-icon[type="password"], 
+.input-with-icon[type="text"] {
+    padding-right: 44px;
+}
+
+.input-with-icon:focus ~ .input-icon-left {
+    color: var(--brand-primary);
+}
+
+/* Custom Show/Hide Password Toggle */
+.btn-icon-toggle {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    z-index: 10;
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-icon-toggle:hover {
+    color: var(--text-primary);
+    background-color: var(--bg-secondary);
+}
+
+/* Override error outline behavior */
+.form-control.is-invalid ~ .input-icon-left {
+    color: var(--brand-danger);
+}
+
+.form-control.is-invalid:focus ~ .input-icon-left {
+    color: var(--brand-danger);
+}
+
+/* Input group adjustments for validations */
+.input-icon-wrapper .invalid-feedback {
+    margin-top: 4px;
+}
+
+/* Responsive collapse */
+@media (max-width: 991.98px) {
+    .auth-banner-panel {
+        display: none !important;
+    }
+}
