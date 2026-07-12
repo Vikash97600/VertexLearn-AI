@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - VertexLearn AI</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Core Style System -->
+    <link rel="stylesheet" href="../assets/css/base/variables.css">
+    <link rel="stylesheet" href="../assets/css/base/typography.css">
+    <link rel="stylesheet" href="../assets/css/components/buttons.css">
+    <link rel="stylesheet" href="../assets/css/components/animations.css">
+    <link rel="stylesheet" href="../assets/css/components/utilities.css">
+    <link rel="stylesheet" href="../assets/css/layout/layout.css">
+    <link rel="stylesheet" href="../assets/css/themes/dark-theme.css">
+    <link rel="stylesheet" href="../assets/css/pages/placeholder-dashboard.css">
+
+    <script>
+        (function() {
+            const theme = localStorage.getItem('vertexlearn_theme');
+            if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark-theme');
+            }
+        })();
+    </script>
+</head>
+<body class="bg-primary">
+
+    <div class="placeholder-page-wrapper d-flex align-items-center justify-content-center flex-column text-center px-4">
+
+        <!-- Icon Badge -->
+        <div class="placeholder-icon-ring placeholder-icon-ring--admin mb-5 animate-fade-in-up">
+            <i class="bi bi-shield-check fs-1 text-primary"></i>
+        </div>
+
+        <div class="animate-fade-in-up" style="animation-delay: 0.1s;">
+            <span class="badge bg-primary-light text-primary fw-semibold px-3 py-2 mb-3 d-inline-block" style="border-radius: var(--radius-full); font-size: 0.75rem;">
+                Coming Next
+            </span>
+            <h1 class="display-5 fw-bold mb-3" style="letter-spacing: -0.03em;">Admin Dashboard</h1>
+            <p class="text-secondary-custom mx-auto mb-5" style="max-width: 460px; line-height: 1.7;">
+                The platform administration workspace is being built. It will enable user management, course approvals, platform analytics, audit logs, and system configuration.
+            </p>
+        </div>
+
+        <!-- Feature chips -->
+        <div class="d-flex flex-wrap justify-content-center gap-2 mb-5 animate-fade-in-up" style="animation-delay: 0.15s;">
+            <span class="feature-chip"><i class="bi bi-people me-1"></i>User Management</span>
+            <span class="feature-chip"><i class="bi bi-check2-circle me-1"></i>Course Approvals</span>
+            <span class="feature-chip"><i class="bi bi-bar-chart-line me-1"></i>Platform Analytics</span>
+            <span class="feature-chip"><i class="bi bi-file-earmark-text me-1"></i>Audit Logs</span>
+            <span class="feature-chip"><i class="bi bi-gear me-1"></i>System Config</span>
+        </div>
+
+        <div class="d-flex flex-wrap gap-3 justify-content-center animate-fade-in-up" style="animation-delay: 0.2s;">
+            <a href="../role-selection.html" class="btn btn-secondary-custom px-4">
+                <i class="bi bi-grid me-2"></i>Switch Workspace
+            </a>
+            <a href="../index.html" class="btn btn-primary px-5">
+                <i class="bi bi-house me-2"></i>Return Home
+            </a>
+        </div>
+
+        <div class="mt-5 pt-4 animate-fade-in-up" style="animation-delay: 0.3s;">
+            <a href="../index.html" class="text-decoration-none">
+                <span class="fw-bold text-secondary-custom" style="letter-spacing: -0.02em;">VertexLearn<span class="text-primary">.AI</span></span>
+            </a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="../assets/js/pages/placeholder-dashboard.js"></script>
+</body>
+</html>

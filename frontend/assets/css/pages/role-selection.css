@@ -1,0 +1,124 @@
+/* role-selection.css - Workspace Role Selection UI styling rules */
+
+.role-selection-wrapper {
+    max-width: 1100px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Card Selection Hover Interactions */
+.role-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-base);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+
+.role-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-premium);
+    border-color: var(--text-secondary) !important;
+}
+
+/* Selected Active States */
+.role-card.selected {
+    border-color: var(--brand-primary) !important;
+    box-shadow: var(--shadow-premium), 0 0 0 1px var(--brand-primary);
+    animation: selectionPulse 0.4s ease-in-out;
+}
+
+.role-card.selected .role-select-btn {
+    background-color: var(--brand-primary);
+    color: #fff;
+    border-color: var(--brand-primary);
+}
+
+@keyframes selectionPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+/* Icon Animations */
+.role-card-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+}
+
+.role-card:hover .role-card-icon-wrapper {
+    background-color: var(--brand-primary-light);
+    transform: scale(1.08);
+}
+
+.role-card:hover .role-card-icon-wrapper i {
+    animation: bounceIcon 0.8s ease-in-out infinite;
+}
+
+@keyframes bounceIcon {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+/* Top Progress loader bar styles */
+.loader-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: var(--brand-primary-light);
+    z-index: 2000;
+}
+
+.loader-progress-bar::before {
+    content: "";
+    display: block;
+    height: 100%;
+    width: 30%;
+    background-color: var(--brand-primary);
+    animation: progressLoop 1.5s linear infinite;
+}
+
+@keyframes progressLoop {
+    0% {
+        margin-left: -30%;
+    }
+    100% {
+        margin-left: 100%;
+    }
+}
+
+/* Fade-in animations */
+.animate-fade-in-up {
+    animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -1,0 +1,65 @@
+/* unauthorized.css - Error pages shared layout and icon animations */
+
+.error-page-wrapper {
+    min-height: 100vh;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-5);
+}
+
+.error-code-label {
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+/* Icon Ring Animation */
+.error-icon-ring {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: var(--brand-danger-light);
+    border: 1px solid rgba(220, 38, 38, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    animation: ringPulse 2.5s ease-in-out infinite;
+}
+
+.error-icon-inner {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--brand-danger-light);
+    border: 1px solid rgba(220, 38, 38, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes ringPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.15);
+    }
+    50% {
+        box-shadow: 0 0 0 16px rgba(220, 38, 38, 0);
+    }
+}
+
+/* Fade-in Up Animation */
+.animate-fade-in-up {
+    opacity: 0;
+    animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

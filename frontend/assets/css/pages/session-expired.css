@@ -1,0 +1,75 @@
+/* session-expired.css - Session expired page styling with amber warning palette */
+
+.error-page-wrapper {
+    min-height: 100vh;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-5);
+}
+
+.error-code-label {
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+/* Clock Icon Ring - Warning Amber palette */
+.session-icon-ring {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: var(--brand-warning-light);
+    border: 1px solid rgba(245, 158, 11, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    animation: amberpulse 2.5s ease-in-out infinite;
+}
+
+.session-icon-inner {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--brand-warning-light);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Slow ticking animation on the clock icon */
+.session-icon-inner i {
+    animation: clockTick 1s steps(2, end) infinite;
+}
+
+@keyframes clockTick {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(6deg); }
+}
+
+@keyframes amberpulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.15);
+    }
+    50% {
+        box-shadow: 0 0 0 16px rgba(245, 158, 11, 0);
+    }
+}
+
+/* Fade-in Up Animation */
+.animate-fade-in-up {
+    opacity: 0;
+    animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

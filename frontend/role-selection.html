@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Your Workspace - VertexLearn AI</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Core Style System -->
+    <link rel="stylesheet" href="./assets/css/base/variables.css">
+    <link rel="stylesheet" href="./assets/css/base/typography.css">
+    <link rel="stylesheet" href="./assets/css/components/buttons.css">
+    <link rel="stylesheet" href="./assets/css/components/cards.css">
+    <link rel="stylesheet" href="./assets/css/components/forms.css">
+    <link rel="stylesheet" href="./assets/css/components/animations.css">
+    <link rel="stylesheet" href="./assets/css/components/utilities.css">
+    <link rel="stylesheet" href="./assets/css/layout/layout.css">
+    <link rel="stylesheet" href="./assets/css/themes/dark-theme.css">
+    <link rel="stylesheet" href="./assets/css/utilities/responsive.css">
+    
+    <!-- Page Specific Stylesheet -->
+    <link rel="stylesheet" href="./assets/css/pages/role-selection.css">
+
+    <!-- Inline Head Script to instantly apply theme (Prevents visual flashing) -->
+    <script>
+        (function() {
+            const theme = localStorage.getItem('vertexlearn_theme');
+            if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark-theme');
+            }
+        })();
+    </script>
+</head>
+<body class="bg-primary">
+
+    <!-- Reusable top loader skeleton bar -->
+    <div class="loader-progress-bar d-none" id="topLoaderBar"></div>
+
+    <div class="container role-selection-wrapper py-5">
+        <!-- Logo Header -->
+        <div class="text-center mb-5 animate-fade-in-up">
+            <a href="index.html" class="sidebar-brand text-decoration-none">
+                <span class="fs-3 fw-bold" style="letter-spacing: -0.03em;">VertexLearn<span class="text-primary">.AI</span></span>
+            </a>
+            <h1 class="h2 fw-bold text-dark mt-4 mb-2">Choose Your Workspace</h1>
+            <p class="text-small text-secondary-custom mx-auto" style="max-width: 500px;">
+                Select the workspace that matches your role to access your personalized e-learning workspace.
+            </p>
+        </div>
+
+        <!-- Alert messages -->
+        <div class="alert alert-danger d-none text-center max-width-readable mx-auto mb-4" id="selectionAlert" role="alert">
+            Please choose a workspace to continue.
+        </div>
+
+        <!-- Selection Cards Grid -->
+        <div class="row g-4 justify-content-center mb-5 animate-fade-in-up" style="animation-delay: 0.1s;">
+            <!-- Student Card -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card role-card h-100 p-4 border" data-role="student">
+                    <div class="role-card-icon-wrapper text-primary mb-4">
+                        <i class="bi bi-mortarboard fs-1"></i>
+                    </div>
+                    <h3 class="h4 fw-bold mb-2">Student</h3>
+                    <p class="text-small text-secondary-custom mb-0 flex-grow-1">
+                        Learn from world-class instructors. Track your progress, use the RAG AI Tutor to resolve doubts, and earn verified certificates.
+                    </p>
+                    <button class="btn btn-secondary-custom w-100 mt-4 role-select-btn">Continue as Student</button>
+                </div>
+            </div>
+
+            <!-- Instructor Card -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card role-card h-100 p-4 border" data-role="instructor">
+                    <div class="role-card-icon-wrapper text-primary mb-4">
+                        <i class="bi bi-presentation-play fs-1"></i>
+                    </div>
+                    <h3 class="h4 fw-bold mb-2">Instructor</h3>
+                    <p class="text-small text-secondary-custom mb-0 flex-grow-1">
+                        Create expert courses, upload lectures, auto-generate module quizzes from video transcripts, and manage class assignments.
+                    </p>
+                    <button class="btn btn-secondary-custom w-100 mt-4 role-select-btn">Continue as Instructor</button>
+                </div>
+            </div>
+
+            <!-- Admin Card -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card role-card h-100 p-4 border" data-role="admin">
+                    <div class="role-card-icon-wrapper text-primary mb-4">
+                        <i class="bi bi-shield-check fs-1"></i>
+                    </div>
+                    <h3 class="h4 fw-bold mb-2">Administrator</h3>
+                    <p class="text-small text-secondary-custom mb-0 flex-grow-1">
+                        Configure course catalogs, approve uploads, audit platform logs, govern role assignments, and review notifications.
+                    </p>
+                    <button class="btn btn-secondary-custom w-100 mt-4 role-select-btn">Continue as Admin</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back to login link -->
+        <div class="text-center animate-fade-in-up" style="animation-delay: 0.2s;">
+            <button class="btn btn-ghost text-small gap-2 logout-trigger-btn" id="logoutBtn">
+                <i class="bi bi-arrow-left"></i> Sign out
+            </button>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Page Specific Script Module -->
+    <script type="module" src="./assets/js/pages/role-selection.js"></script>
+</body>
+</html>
