@@ -1,0 +1,94 @@
+<!-- ==========================================================================
+   header.html - Reusable Workspace Header Markup
+   VertexLearn AI · Design System Component
+   ========================================================================== -->
+
+<header class="vl-header" aria-label="Global Workspace Header">
+    <!-- Header Left Area: Hamburger and Breadcrumb -->
+    <div class="vl-header-left">
+        <button class="vl-hamburger mobile-only" id="sidebarHamburgerBtn" aria-label="Open sidebar menu">
+            <i class="bi bi-list"></i>
+        </button>
+        
+        <div class="vl-header-breadcrumb">
+            <nav aria-label="breadcrumb">
+                <ol class="vl-breadcrumb-trail mb-0">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item"><span class="separator">&gt;</span></li>
+                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                </ol>
+            </nav>
+            <h1 class="vl-page-title mb-0">Student Dashboard</h1>
+        </div>
+    </div>
+
+    <!-- Header Center Area: Global Search Box -->
+    <div class="vl-header-search desktop-only">
+        <div class="vl-global-search">
+            <i class="bi bi-search"></i>
+            <input type="text" class="vl-global-search-input" id="globalSearchInput" placeholder="Search courses, instructors, notes..." aria-label="Global search">
+            <kbd class="vl-global-search-kbd">Ctrl+K</kbd>
+        </div>
+    </div>
+
+    <!-- Header Right Area: Quick Actions and Profile -->
+    <div class="vl-header-right">
+        <!-- Notification Trigger Button -->
+        <button class="vl-icon-btn" id="notificationTrigger" aria-label="View notifications">
+            <i class="bi bi-bell"></i>
+            <span class="vl-notif-dot"></span>
+        </button>
+
+        <!-- Theme Toggle Button -->
+        <button class="vl-icon-btn theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle theme">
+            <i class="bi bi-moon"></i>
+        </button>
+
+        <!-- AI Assistant Quick Trigger -->
+        <button class="vl-ai-btn" id="quickAiBtn" aria-label="Open AI Tutor">
+            <i class="bi bi-magic"></i>
+            <span>Ask AI</span>
+        </button>
+
+        <!-- Profile Dropdown Container -->
+        <div class="vl-dropdown-wrap">
+            <button class="vl-header-avatar" id="profileTrigger" aria-haspopup="true" aria-expanded="false" aria-label="Open user menu">
+                AS
+            </button>
+
+            <!-- Premium Profile Dropdown Menu -->
+            <div class="vl-profile-dropdown" id="profileDropdown" role="menu" aria-label="User menu">
+                <div class="vl-dropdown-header">
+                    <div class="vl-dropdown-avatar" id="dropdownAvatar">AS</div>
+                    <div class="vl-profile-info">
+                        <div class="vl-dropdown-name" id="dropdownProfileName">Ananya Sharma</div>
+                        <div class="vl-dropdown-email" id="dropdownProfileEmail">ananya@example.com</div>
+                    </div>
+                </div>
+                <div class="vl-dropdown-body">
+                    <a href="#profile" class="vl-dropdown-item" role="menuitem">
+                        <i class="bi bi-person"></i>
+                        <span>My Profile</span>
+                    </a>
+                    <a href="#settings" class="vl-dropdown-item" role="menuitem">
+                        <i class="bi bi-gear"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="#help" class="vl-dropdown-item" role="menuitem">
+                        <i class="bi bi-question-circle"></i>
+                        <span>Help Center</span>
+                    </a>
+                    <a href="#shortcuts" class="vl-dropdown-item" role="menuitem">
+                        <i class="bi bi-keyboard"></i>
+                        <span>Keyboard Shortcuts</span>
+                    </a>
+                    <div class="vl-dropdown-divider"></div>
+                    <button class="vl-dropdown-item danger" id="dropdownLogoutBtn" role="menuitem">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Sign Out</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

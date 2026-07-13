@@ -1,0 +1,126 @@
+<!-- ==========================================================================
+   sidebar.html - Reusable Workspace Navigation Sidebar Markup
+   VertexLearn AI · Design System Component
+   ========================================================================== -->
+
+<aside class="vl-sidebar" id="appSidebar" aria-label="Main Navigation">
+    <!-- Collapse Trigger (Desktop Only) -->
+    <button class="vl-collapse-btn" id="sidebarCollapseBtn" aria-label="Collapse sidebar">
+        <i class="bi bi-chevron-left"></i>
+    </button>
+
+    <!-- Sidebar Top Brand Logo Area -->
+    <div class="vl-sidebar-brand">
+        <div class="vl-brand-logo">
+            <i class="bi bi-mortarboard-fill"></i>
+        </div>
+        <div class="vl-brand-text">
+            <span class="vl-brand-name">VertexLearn<span>.AI</span></span>
+            <div class="d-flex align-items-center gap-2">
+                <span class="vl-brand-subtitle">Student Workspace</span>
+                <span class="vl-workspace-badge">Student</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Section -->
+    <div class="vl-sidebar-search">
+        <div class="vl-search-box" id="sidebarSearchTrigger">
+            <i class="bi bi-search"></i>
+            <input type="text" class="vl-search-input" id="sidebarSearchInput" placeholder="Search courses..." aria-label="Search courses">
+            <span class="vl-search-kbd">Ctrl+K</span>
+        </div>
+    </div>
+
+    <!-- Navigation List -->
+    <nav class="vl-sidebar-nav" aria-label="Student Navigation Links">
+        <span class="vl-nav-section">Core Workspace</span>
+        <a href="student-dashboard.html" class="vl-nav-link active">
+            <i class="bi bi-grid-1x2"></i>
+            <span class="vl-nav-link-text">Dashboard</span>
+        </a>
+        <a href="#my-learning" class="vl-nav-link">
+            <i class="bi bi-book"></i>
+            <span class="vl-nav-link-text">My Learning</span>
+        </a>
+        <a href="#catalog" class="vl-nav-link">
+            <i class="bi bi-compass"></i>
+            <span class="vl-nav-link-text">Course Catalog</span>
+        </a>
+
+        <span class="vl-nav-section">Academics</span>
+        <a href="#assignments" class="vl-nav-link">
+            <i class="bi bi-journal-text"></i>
+            <span class="vl-nav-link-text">Assignments</span>
+        </a>
+        <a href="#quizzes" class="vl-nav-link">
+            <i class="bi bi-question-circle"></i>
+            <span class="vl-nav-link-text">Quizzes</span>
+        </a>
+        <a href="#certificates" class="vl-nav-link">
+            <i class="bi bi-patch-check"></i>
+            <span class="vl-nav-link-text">Certificates</span>
+        </a>
+
+        <span class="vl-nav-section">Personal</span>
+        <a href="#bookmarks" class="vl-nav-link">
+            <i class="bi bi-bookmark"></i>
+            <span class="vl-nav-link-text">Bookmarks</span>
+        </a>
+        <a href="#notes" class="vl-nav-link">
+            <i class="bi bi-pencil-square"></i>
+            <span class="vl-nav-link-text">Notes</span>
+        </a>
+        <a href="#achievements" class="vl-nav-link">
+            <i class="bi bi-trophy"></i>
+            <span class="vl-nav-link-text">Achievements</span>
+        </a>
+        <a href="#leaderboard" class="vl-nav-link">
+            <i class="bi bi-bar-chart"></i>
+            <span class="vl-nav-link-text">Leaderboard</span>
+        </a>
+
+        <span class="vl-nav-section">Social & Settings</span>
+        <a href="#discussions" class="vl-nav-link">
+            <i class="bi bi-chat-left-text"></i>
+            <span class="vl-nav-link-text">Discussions</span>
+        </a>
+        <a href="#notifications" class="vl-nav-link">
+            <i class="bi bi-bell"></i>
+            <span class="vl-nav-link-text">Notifications</span>
+            <span class="vl-nav-badge">3</span>
+        </a>
+        <a href="#profile" class="vl-nav-link">
+            <i class="bi bi-person"></i>
+            <span class="vl-nav-link-text">Profile</span>
+        </a>
+        <a href="#settings" class="vl-nav-link">
+            <i class="bi bi-gear"></i>
+            <span class="vl-nav-link-text">Settings</span>
+        </a>
+
+        <div class="mt-auto pt-3 pb-2">
+            <button class="vl-nav-link danger" id="sidebarLogoutTrigger" aria-label="Sign out">
+                <i class="bi bi-box-arrow-right"></i>
+                <span class="vl-nav-link-text">Logout</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Sidebar Footer Profile -->
+    <div class="vl-sidebar-footer">
+        <a href="#profile-dropdown" class="vl-sidebar-profile" id="sidebarProfileTrigger" aria-label="User profile settings">
+            <div class="vl-profile-avatar" id="sidebarAvatar">
+                AS
+            </div>
+            <div class="vl-profile-info">
+                <div class="vl-profile-name" id="sidebarProfileName">Ananya Sharma</div>
+                <div class="vl-profile-email" id="sidebarProfileEmail">ananya@example.com</div>
+                <div class="vl-level-badge">
+                    <i class="bi bi-lightning-fill"></i> Level 5 Learner
+                </div>
+            </div>
+            <i class="bi bi-chevron-expand vl-profile-chevron"></i>
+        </a>
+    </div>
+</aside>

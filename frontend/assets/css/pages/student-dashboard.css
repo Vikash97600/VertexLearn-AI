@@ -1,0 +1,1520 @@
+/* ==========================================================================
+   student-dashboard.css
+   Student Workspace Layout — Page-Specific Styles
+   VertexLearn AI · Design System Extension
+   Inspired by: Linear, Stripe, Notion, Apple Education, Vercel
+   ========================================================================== */
+
+/* ==========================================================================
+   1. SIDEBAR — PREMIUM REDESIGN
+   ========================================================================== */
+
+/* Override base sidebar width for this dashboard */
+:root {
+    --sidebar-width: 280px;
+    --sidebar-collapsed-width: 88px;
+    --header-height: 72px;
+}
+
+/* --- Sidebar Base --- */
+.vl-sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--bg-sidebar);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    transition: width 250ms cubic-bezier(0.4, 0, 0.2, 1),
+                transform 250ms cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 250ms ease;
+    overflow: hidden;
+    will-change: width;
+}
+
+/* Subtle premium sidebar shadow */
+.vl-sidebar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -1px;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        var(--border-color) 15%,
+        var(--border-color) 85%,
+        transparent
+    );
+    pointer-events: none;
+}
+
+/* --- Sidebar Brand Top --- */
+.vl-sidebar-brand {
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    padding: 0 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+    gap: 0.75rem;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.vl-brand-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.vl-brand-logo:hover {
+    transform: scale(1.04);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+}
+
+.vl-brand-text {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: opacity 200ms ease, width 250ms ease;
+}
+
+.vl-brand-name {
+    font-weight: 700;
+    font-size: 0.9375rem;
+    letter-spacing: -0.025em;
+    color: var(--text-primary);
+    white-space: nowrap;
+    line-height: 1.2;
+}
+
+.vl-brand-name span {
+    color: var(--brand-primary);
+}
+
+.vl-brand-subtitle {
+    font-size: 0.6875rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+}
+
+/* Workspace badge */
+.vl-workspace-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(124, 58, 237, 0.08));
+    border: 1px solid rgba(37, 99, 235, 0.18);
+    color: var(--brand-primary);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    margin-top: 2px;
+}
+
+/* --- Sidebar Search --- */
+.vl-sidebar-search {
+    padding: 0.875rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.vl-search-box {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    transition: all 200ms ease;
+    position: relative;
+}
+
+.vl-search-box:hover,
+.vl-search-box:focus-within {
+    background: var(--bg-primary);
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+
+.vl-search-box i {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+
+.vl-search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 0.8125rem;
+    color: var(--text-primary);
+    font-family: inherit;
+    min-width: 0;
+}
+
+.vl-search-input::placeholder {
+    color: var(--text-muted);
+}
+
+.vl-search-kbd {
+    font-size: 0.625rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--border-color);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 1px 5px;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+    transition: opacity 200ms ease;
+    flex-shrink: 0;
+}
+
+/* --- Sidebar Navigation --- */
+.vl-sidebar-nav {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0.5rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* Scrollbar for nav */
+.vl-sidebar-nav::-webkit-scrollbar { width: 4px; }
+.vl-sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+.vl-sidebar-nav::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+
+/* Nav Section Label */
+.vl-nav-section {
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    padding: 1rem 0.625rem 0.375rem;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: opacity 200ms ease;
+}
+
+/* Nav Link */
+.vl-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.6875rem;
+    padding: 0.5625rem 0.75rem;
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 150ms ease;
+    white-space: nowrap;
+    position: relative;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    width: 100%;
+    letter-spacing: -0.01em;
+    overflow: hidden;
+}
+
+.vl-nav-link i {
+    font-size: 1.0625rem;
+    width: 20px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: color 150ms ease, transform 150ms ease;
+}
+
+.vl-nav-link-text {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: opacity 200ms ease;
+}
+
+/* Badge count */
+.vl-nav-badge {
+    font-size: 0.625rem;
+    font-weight: 700;
+    background: var(--brand-danger);
+    color: #fff;
+    border-radius: var(--radius-full);
+    padding: 1px 5px;
+    min-width: 16px;
+    text-align: center;
+    line-height: 1.4;
+    transition: opacity 200ms ease;
+    flex-shrink: 0;
+}
+
+/* Hover State */
+.vl-nav-link:hover {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+.vl-nav-link:hover i {
+    color: var(--brand-primary);
+    transform: translateX(1px);
+}
+
+/* Active State — Stripe-style left indicator */
+.vl-nav-link.active {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.09) 0%, rgba(37, 99, 235, 0.05) 100%);
+    color: var(--brand-primary);
+    font-weight: 600;
+}
+
+.vl-nav-link.active i {
+    color: var(--brand-primary);
+}
+
+.vl-nav-link.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20%;
+    height: 60%;
+    width: 3px;
+    background: var(--brand-primary);
+    border-radius: 0 2px 2px 0;
+}
+
+/* Danger link (logout) */
+.vl-nav-link.danger {
+    color: var(--text-muted);
+}
+
+.vl-nav-link.danger:hover {
+    background: var(--brand-danger-light);
+    color: var(--brand-danger);
+}
+
+.vl-nav-link.danger:hover i {
+    color: var(--brand-danger);
+}
+
+/* --- Sidebar Footer --- */
+.vl-sidebar-footer {
+    padding: 0.875rem 0.75rem;
+    border-top: 1px solid var(--border-color);
+    flex-shrink: 0;
+    background: var(--bg-sidebar);
+}
+
+.vl-sidebar-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 0.75rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background 150ms ease;
+    text-decoration: none;
+    color: var(--text-primary);
+    position: relative;
+    overflow: hidden;
+}
+
+.vl-sidebar-profile:hover {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+.vl-profile-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, #2563EB, #7C3AED);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    letter-spacing: 0;
+    position: relative;
+}
+
+/* Online indicator */
+.vl-profile-avatar::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 8px;
+    height: 8px;
+    background: var(--brand-success);
+    border: 2px solid var(--bg-sidebar);
+    border-radius: 50%;
+}
+
+.vl-profile-info {
+    flex: 1;
+    overflow: hidden;
+    transition: opacity 200ms ease;
+}
+
+.vl-profile-name {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3;
+}
+
+.vl-profile-email {
+    font-size: 0.6875rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3;
+}
+
+.vl-level-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.08));
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    color: #d97706;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: var(--radius-full);
+    white-space: nowrap;
+    margin-top: 2px;
+    width: fit-content;
+}
+
+.vl-profile-chevron {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    flex-shrink: 0;
+    transition: transform 200ms ease, opacity 200ms ease;
+}
+
+.vl-sidebar-profile:hover .vl-profile-chevron {
+    color: var(--text-secondary);
+}
+
+/* --- Sidebar Collapse Toggle Button --- */
+.vl-collapse-btn {
+    position: absolute;
+    top: 50%;
+    right: -14px;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    transition: all 200ms ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.vl-collapse-btn:hover {
+    background: var(--brand-primary);
+    border-color: var(--brand-primary);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+/* --- COLLAPSED SIDEBAR STATE --- */
+.vl-sidebar.collapsed {
+    width: var(--sidebar-collapsed-width);
+}
+
+.vl-sidebar.collapsed .vl-brand-text,
+.vl-sidebar.collapsed .vl-search-kbd {
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    overflow: hidden;
+}
+
+.vl-sidebar.collapsed .vl-sidebar-search {
+    padding: 0.875rem 0.625rem;
+}
+
+.vl-sidebar.collapsed .vl-search-box {
+    justify-content: center;
+    padding: 0.5rem;
+}
+
+.vl-sidebar.collapsed .vl-search-input {
+    display: none;
+}
+
+.vl-sidebar.collapsed .vl-nav-section {
+    opacity: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.vl-sidebar.collapsed .vl-nav-link {
+    justify-content: center;
+    padding: 0.625rem;
+}
+
+.vl-sidebar.collapsed .vl-nav-link-text,
+.vl-sidebar.collapsed .vl-nav-badge {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+}
+
+.vl-sidebar.collapsed .vl-nav-link i {
+    width: auto;
+}
+
+.vl-sidebar.collapsed .vl-sidebar-profile {
+    justify-content: center;
+    padding: 0.625rem;
+}
+
+.vl-sidebar.collapsed .vl-profile-info,
+.vl-sidebar.collapsed .vl-profile-chevron {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+}
+
+.vl-sidebar.collapsed .vl-sidebar-footer {
+    padding: 0.875rem 0.625rem;
+}
+
+.vl-sidebar.collapsed .vl-collapse-btn i {
+    transform: rotate(180deg);
+}
+
+/* Tooltip on collapsed sidebar items */
+.vl-sidebar.collapsed [data-bs-toggle="tooltip"] {
+    pointer-events: all;
+}
+
+/* ==========================================================================
+   2. MAIN CONTENT LAYOUT
+   ========================================================================== */
+
+.vl-main {
+    margin-left: var(--sidebar-width);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-primary);
+    transition: margin-left 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.vl-main.sidebar-collapsed {
+    margin-left: var(--sidebar-collapsed-width);
+}
+
+/* ==========================================================================
+   3. HEADER — PREMIUM GLASS EFFECT
+   ========================================================================== */
+
+.vl-header {
+    height: var(--header-height);
+    background: rgba(var(--bs-body-bg-rgb, 255, 255, 255), 0.85);
+    backdrop-filter: blur(10px) saturate(160%);
+    -webkit-backdrop-filter: blur(10px) saturate(160%);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.75rem;
+    position: sticky;
+    top: 0;
+    z-index: 990;
+    gap: 1rem;
+    flex-shrink: 0;
+}
+
+/* Header Left */
+.vl-header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+}
+
+/* Hamburger */
+.vl-hamburger {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    font-size: 1.125rem;
+    cursor: pointer;
+    transition: all 150ms ease;
+    flex-shrink: 0;
+}
+
+.vl-hamburger:hover {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* Breadcrumb in header */
+.vl-header-breadcrumb {
+    display: flex;
+    flex-direction: column;
+}
+
+.vl-page-title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+}
+
+.vl-breadcrumb-trail {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1;
+}
+
+.vl-breadcrumb-trail a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 150ms ease;
+}
+
+.vl-breadcrumb-trail a:hover {
+    color: var(--brand-primary);
+}
+
+.vl-breadcrumb-trail .separator {
+    font-size: 0.625rem;
+    color: var(--border-color);
+}
+
+/* Header Center — Global Search */
+.vl-header-search {
+    flex: 1;
+    max-width: 480px;
+}
+
+.vl-global-search {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    padding: 0.5625rem 1rem;
+    cursor: text;
+    transition: all 200ms ease;
+    position: relative;
+}
+
+.vl-global-search:hover {
+    background: var(--bg-primary);
+    border-color: rgba(37, 99, 235, 0.3);
+}
+
+.vl-global-search:focus-within {
+    background: var(--bg-primary);
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.vl-global-search i {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    flex-shrink: 0;
+}
+
+.vl-global-search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    font-family: inherit;
+    min-width: 0;
+}
+
+.vl-global-search-input::placeholder {
+    color: var(--text-muted);
+}
+
+.vl-global-search-kbd {
+    font-size: 0.625rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--border-color);
+    border-radius: 4px;
+    padding: 2px 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Header Right */
+.vl-header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    flex-shrink: 0;
+}
+
+/* Header icon button */
+.vl-icon-btn {
+    width: 38px;
+    height: 38px;
+    border: none;
+    background: transparent;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    font-size: 1.0625rem;
+    cursor: pointer;
+    transition: all 150ms ease;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.vl-icon-btn:hover {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* Notification dot */
+.vl-notif-dot {
+    position: absolute;
+    top: 5px;
+    right: 6px;
+    width: 7px;
+    height: 7px;
+    background: var(--brand-danger);
+    border-radius: 50%;
+    border: 1.5px solid var(--bg-primary);
+}
+
+/* AI Quick Button */
+.vl-ai-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.4375rem 0.875rem;
+    background: linear-gradient(135deg, #2563EB, #7C3AED);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-full);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 200ms ease;
+    letter-spacing: -0.01em;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+    white-space: nowrap;
+}
+
+.vl-ai-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+}
+
+.vl-ai-btn i {
+    font-size: 0.875rem;
+}
+
+/* AI pulse ring */
+.vl-ai-btn::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: #4ade80;
+    border-radius: 50%;
+    animation: ai-pulse 2s ease-in-out infinite;
+}
+
+@keyframes ai-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.3); }
+}
+
+/* Header Profile Avatar */
+.vl-header-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, #2563EB, #7C3AED);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 200ms ease;
+    border: 2px solid transparent;
+    flex-shrink: 0;
+}
+
+.vl-header-avatar:hover {
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    transform: scale(1.04);
+}
+
+/* ==========================================================================
+   4. PROFILE DROPDOWN — PREMIUM
+   ========================================================================== */
+
+.vl-dropdown-wrap {
+    position: relative;
+}
+
+.vl-profile-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 260px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04);
+    z-index: 2000;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+    pointer-events: none;
+    transition: opacity 180ms ease, transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vl-profile-dropdown.open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: all;
+}
+
+.vl-dropdown-header {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.vl-dropdown-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, #2563EB, #7C3AED);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.vl-dropdown-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.3;
+}
+
+.vl-dropdown-email {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 160px;
+}
+
+.vl-dropdown-body {
+    padding: 0.375rem;
+}
+
+.vl-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6875rem;
+    padding: 0.5625rem 0.875rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 150ms ease;
+    border: none;
+    background: transparent;
+    width: 100%;
+    letter-spacing: -0.01em;
+}
+
+.vl-dropdown-item i {
+    font-size: 1rem;
+    width: 18px;
+    flex-shrink: 0;
+    color: var(--text-muted);
+    transition: color 150ms ease;
+}
+
+.vl-dropdown-item:hover {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+.vl-dropdown-item:hover i {
+    color: var(--brand-primary);
+}
+
+.vl-dropdown-item.danger:hover {
+    background: var(--brand-danger-light);
+    color: var(--brand-danger);
+}
+
+.vl-dropdown-item.danger:hover i {
+    color: var(--brand-danger);
+}
+
+.vl-dropdown-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 0.25rem 0;
+}
+
+/* ==========================================================================
+   5. CONTENT AREA
+   ========================================================================== */
+
+.vl-content {
+    flex: 1;
+    padding: 0 1.75rem 2rem;
+    max-width: 1600px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* ==========================================================================
+   6. BREADCRUMB SECTION
+   ========================================================================== */
+
+.vl-breadcrumb-section {
+    padding: 1.25rem 0 0;
+}
+
+.vl-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.vl-breadcrumb-item a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 150ms ease;
+}
+
+.vl-breadcrumb-item a:hover {
+    color: var(--brand-primary);
+}
+
+.vl-breadcrumb-item.active {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.vl-breadcrumb-sep {
+    color: var(--border-color);
+    font-size: 0.75rem;
+    user-select: none;
+}
+
+/* ==========================================================================
+   7. WELCOME SECTION — PREMIUM HERO
+   ========================================================================== */
+
+.vl-welcome {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    padding: 3rem;
+    margin: 1.25rem 0;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle gradient shimmer on top-left */
+.vl-welcome::before {
+    content: '';
+    position: absolute;
+    top: -80px;
+    left: -80px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+/* Right side gradient accent */
+.vl-welcome::after {
+    content: '';
+    position: absolute;
+    bottom: -60px;
+    right: 200px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+/* Greeting */
+.vl-greeting {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--brand-primary);
+    letter-spacing: 0.01em;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.vl-greeting-emoji {
+    font-size: 1rem;
+}
+
+/* Welcome Heading */
+.vl-welcome-heading {
+    font-size: 2.125rem;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    color: var(--text-primary);
+    line-height: 1.15;
+    margin-bottom: 0.875rem;
+}
+
+.vl-welcome-heading .highlight {
+    background: linear-gradient(135deg, #2563EB, #7C3AED);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Welcome description */
+.vl-welcome-desc {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    max-width: 520px;
+    margin-bottom: 1.75rem;
+}
+
+/* Welcome CTA buttons */
+.vl-welcome-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.vl-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.375rem;
+    background: var(--brand-primary);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 200ms ease;
+    letter-spacing: -0.01em;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+}
+
+.vl-btn-primary:hover {
+    background: var(--brand-primary-hover);
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+}
+
+.vl-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 200ms ease;
+    letter-spacing: -0.01em;
+}
+
+.vl-btn-secondary:hover {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border-color: var(--text-secondary);
+    transform: translateY(-1px);
+}
+
+/* --- Welcome Right Illustration --- */
+.vl-welcome-illustration {
+    position: relative;
+    width: 340px;
+    height: 240px;
+    flex-shrink: 0;
+}
+
+/* Illustration base card */
+.vl-illus-base {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #EFF6FF 0%, #F5F3FF 100%);
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(37, 99, 235, 0.1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vl-illus-icon {
+    font-size: 5rem;
+    background: linear-gradient(135deg, #2563EB, #7C3AED);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: float-icon 4s ease-in-out infinite;
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes float-icon {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+/* Floating stat cards on illustration */
+.vl-float-card {
+    position: absolute;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 0.625rem 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    white-space: nowrap;
+    z-index: 5;
+}
+
+.vl-float-card-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+}
+
+.vl-float-card-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.vl-float-card-value {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+.vl-float-card-label {
+    font-size: 0.625rem;
+    color: var(--text-muted);
+    line-height: 1.2;
+}
+
+/* Card positions and animations */
+.vl-float-streak {
+    top: -14px;
+    left: -14px;
+    animation: float-card-1 3.5s ease-in-out infinite;
+}
+
+.vl-float-goal {
+    bottom: -14px;
+    left: 20px;
+    animation: float-card-2 4s ease-in-out infinite;
+}
+
+.vl-float-courses {
+    top: 20px;
+    right: -18px;
+    animation: float-card-3 3.8s ease-in-out infinite;
+}
+
+.vl-float-ai {
+    bottom: -14px;
+    right: 10px;
+    animation: float-card-4 4.2s ease-in-out infinite;
+}
+
+@keyframes float-card-1 {
+    0%, 100% { transform: translateY(0px) rotate(-1deg); }
+    50% { transform: translateY(-5px) rotate(-1deg); }
+}
+@keyframes float-card-2 {
+    0%, 100% { transform: translateY(0px) rotate(1.5deg); }
+    50% { transform: translateY(-6px) rotate(1.5deg); }
+}
+@keyframes float-card-3 {
+    0%, 100% { transform: translateY(0px) rotate(1deg); }
+    50% { transform: translateY(-7px) rotate(1deg); }
+}
+@keyframes float-card-4 {
+    0%, 100% { transform: translateY(0px) rotate(-0.5deg); }
+    50% { transform: translateY(-5px) rotate(-0.5deg); }
+}
+
+/* ==========================================================================
+   8. PLACEHOLDER CONTENT AREA
+   ========================================================================== */
+
+.vl-placeholder-area {
+    min-height: 900px;
+    border: 1.5px dashed var(--border-color);
+    border-radius: var(--radius-xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.75rem;
+    background: transparent;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    padding: 2rem;
+}
+
+/* Subtle dot grid pattern */
+.vl-placeholder-area::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, var(--border-color) 1px, transparent 1px);
+    background-size: 24px 24px;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.vl-placeholder-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-xl);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.375rem;
+    color: var(--text-muted);
+    position: relative;
+    z-index: 1;
+}
+
+.vl-placeholder-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    position: relative;
+    z-index: 1;
+}
+
+.vl-placeholder-sub {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    max-width: 400px;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+}
+
+/* ==========================================================================
+   9. MOBILE OVERLAY (Backdrop for mobile sidebar)
+   ========================================================================== */
+
+.vl-sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(2px);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 250ms ease;
+}
+
+.vl-sidebar-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* ==========================================================================
+   10. DARK MODE OVERRIDES
+   ========================================================================== */
+
+html.dark-theme .vl-illus-base {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(124, 58, 237, 0.06) 100%);
+    border-color: rgba(37, 99, 235, 0.12);
+}
+
+html.dark-theme .vl-header {
+    background: rgba(9, 9, 11, 0.85);
+}
+
+html.dark-theme .vl-global-search {
+    background: var(--bg-secondary);
+}
+
+html.dark-theme .vl-profile-dropdown {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+html.dark-theme .vl-float-card {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+html.dark-theme .vl-welcome::before {
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, transparent 70%);
+}
+
+html.dark-theme .vl-collapse-btn {
+    background: var(--bg-secondary);
+}
+
+/* ==========================================================================
+   11. RESPONSIVE
+   ========================================================================== */
+
+/* Tablet (992px and below) */
+@media (max-width: 991.98px) {
+    .vl-sidebar {
+        transform: translateX(-100%);
+        width: 280px !important; /* Always full on mobile */
+    }
+
+    .vl-sidebar.mobile-open {
+        transform: translateX(0);
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .vl-main {
+        margin-left: 0 !important;
+    }
+
+    .vl-header {
+        padding: 0 1rem;
+    }
+
+    .vl-content {
+        padding: 0 1rem 1.5rem;
+    }
+
+    .vl-collapse-btn {
+        display: none;
+    }
+
+    .vl-welcome {
+        grid-template-columns: 1fr;
+        padding: 2rem;
+    }
+
+    .vl-welcome-illustration {
+        width: 100%;
+        height: 200px;
+    }
+
+    .vl-header-search {
+        display: none;
+    }
+
+    .vl-ai-btn span {
+        display: none;
+    }
+
+    .vl-ai-btn {
+        width: 38px;
+        height: 38px;
+        padding: 0;
+        border-radius: var(--radius-md);
+        justify-content: center;
+    }
+
+    .vl-ai-btn::before {
+        display: none;
+    }
+}
+
+/* Mobile (576px and below) */
+@media (max-width: 575.98px) {
+    .vl-welcome {
+        padding: 1.5rem;
+    }
+
+    .vl-welcome-heading {
+        font-size: 1.625rem;
+    }
+
+    .vl-welcome-desc {
+        font-size: 0.875rem;
+    }
+
+    .vl-welcome-illustration {
+        height: 160px;
+    }
+
+    .vl-float-courses,
+    .vl-float-ai {
+        display: none;
+    }
+
+    .vl-welcome-actions .vl-btn-secondary {
+        display: none;
+    }
+
+    .vl-header-breadcrumb .vl-page-title {
+        font-size: 0.875rem;
+    }
+}
+
+/* ==========================================================================
+   12. PAGE ENTRY ANIMATIONS
+   ========================================================================== */
+
+.vl-anim-fade-up {
+    animation: vlFadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.vl-anim-delay-1 { animation-delay: 0.05s; }
+.vl-anim-delay-2 { animation-delay: 0.1s; }
+.vl-anim-delay-3 { animation-delay: 0.15s; }
+.vl-anim-delay-4 { animation-delay: 0.2s; }
+
+@keyframes vlFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Sidebar entry animation */
+.vl-sidebar {
+    animation: sidebarSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes sidebarSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Nav links stagger */
+.vl-nav-link {
+    animation: navLinkFade 0.3s both;
+}
+
+@keyframes navLinkFade {
+    from { opacity: 0; transform: translateX(-8px); }
+    to { opacity: 1; transform: translateX(0); }
+}
